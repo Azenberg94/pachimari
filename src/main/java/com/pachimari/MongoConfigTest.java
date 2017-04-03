@@ -9,10 +9,14 @@ import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.github.fakemongo.Fongo;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+<<<<<<< HEAD
 /*
 @Configuration
 @EnableMongoRepositories(basePackages = "com.pachimari.user.repository")
 
+=======
+@Configuration
+>>>>>>> a4e2acbd441a0930c399f790b619c38103b552ae
 public class MongoConfigTest extends  AbstractMongoConfiguration {
 
 
@@ -24,7 +28,14 @@ public class MongoConfigTest extends  AbstractMongoConfiguration {
     @Override
     @Bean
     public Mongo mongo() throws Exception {
+<<<<<<< HEAD
         return new Fongo(getDatabaseName()).getMongo();
     }
 
 }*/
+=======
+        return new MongoClient("127.0.0.1");
+    }
+
+}
+>>>>>>> a4e2acbd441a0930c399f790b619c38103b552ae

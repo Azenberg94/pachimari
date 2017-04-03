@@ -3,8 +3,13 @@ package com.pachimari.user;
 import com.pachimari.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import com.pachimari.user.UserAdapter;
+
+import java.util.List;
+
+
 /**
  * Created by Pierre on 02/03/2017.
  */
@@ -12,7 +17,6 @@ import com.pachimari.user.UserAdapter;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
-
     @Override
     public List<UserDTO> getList() {
         return UserAdapter.listToUserDTO(userRepository.findAll());
@@ -39,6 +43,5 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return userDTO;
     }
-
 
 }

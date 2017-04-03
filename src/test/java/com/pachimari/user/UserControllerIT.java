@@ -1,11 +1,6 @@
 package com.pachimari.user;
-import com.github.fakemongo.Fongo;
+
 import com.jayway.restassured.RestAssured;
-import com.lordofthejars.nosqlunit.annotation.UsingDataSet;
-import com.lordofthejars.nosqlunit.core.LoadStrategyEnum;
-import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
 import com.pachimari.user.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -62,6 +57,7 @@ public class UserControllerIT {
                 .get("/user")
                 .then()
                 .statusCode(200)
+
                 .body("$",hasSize(2)).log().all();
     }
     @Test
@@ -74,6 +70,7 @@ public class UserControllerIT {
                 .body("id",is(1))
                 .body("name",is("test3")).log().all();
     }
+
     @Test
     public void should_create_user(){
 
@@ -83,6 +80,7 @@ public class UserControllerIT {
                 .post("/user")
                 .then()
                 .statusCode(200)
+
                 .body("name",is("fifth")).log().all();
     }
 
@@ -96,6 +94,7 @@ public class UserControllerIT {
                 .body("id",is(0))
                 .body("name",is("test")).log().all();
     }
+
     @Test
     public void should_fail_get_list_user(){
 

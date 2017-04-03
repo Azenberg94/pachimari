@@ -22,7 +22,12 @@ import javax.persistence.*;
 public class User {
 
     @Id
+    @GeneratedValue
     private Integer id;
+
+
+
+
 
     private String name;
 

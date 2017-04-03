@@ -37,6 +37,7 @@ public class UserController {
         }
       return  userService.createAccount(accountEntity);
     }
+
     @DeleteMapping()
     public UserDTO deleteAccount(@RequestBody  Integer id){
         return userService.deleteAccount(id);
@@ -45,5 +46,6 @@ public class UserController {
     public UserDTO updateAccount(@RequestBody @Valid UserDTO userDTO,  BindingResult bindingResult){
         return userService.updateAccount(userDTO);
     }
+
 
 }
