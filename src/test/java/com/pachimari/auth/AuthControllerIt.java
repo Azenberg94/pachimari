@@ -28,7 +28,10 @@ public class AuthControllerIt {
         RestAssured.port = localServerPort;
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> featureAuth
     @Test
     public void should_get_one(){
         AuthDto dto = AuthDto.builder()

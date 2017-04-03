@@ -8,6 +8,7 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.context.annotation.Bean;
 
 
+
 @SpringBootApplication
 @EnableAutoConfiguration
 public class PachimariApplication {

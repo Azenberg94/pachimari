@@ -12,6 +12,7 @@ import java.sql.SQLException;
 /**
  * Created by iPlowPlow on 10/03/2017.
  */
+
 @Repository
 public class AuthRepositoryJdbc extends JdbcDaoSupport {
 
@@ -25,6 +26,17 @@ public class AuthRepositoryJdbc extends JdbcDaoSupport {
         return jdbcTemplate.queryForObject(sql, this::map, new String[]{login, pwd});
     }
 
+    public void addAuth(String login, String pwd){
+        JdbcTemplate jdbcTemplate = getJdbcTemplate();
+        String sql = "INSERT INTO auth(login, pwd) VALUES( ? , ? )";
+        jdbcTemplate.update(sql, new String[]{login, pwd});
+    }
+
+    public void updateAuth(String login, String pwd){
+        JdbcTemplate jdbcTemplate = getJdbcTemplate();
+        String sql = "UPDATE auth SET pwd = ? WHERE login = ?";
+        jdbcTemplate.update(sql, new String[]{pwd, login});
+    }
 
     private AuthEntity map(ResultSet rs, int rowNum) throws SQLException {
         return AuthEntity.builder()
@@ -33,4 +45,5 @@ public class AuthRepositoryJdbc extends JdbcDaoSupport {
                 .pwd(rs.getString("pwd"))
                 .build();
     }
+
 }
