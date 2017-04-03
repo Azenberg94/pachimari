@@ -1,12 +1,23 @@
 package com.pachimari.auth;
 
+<<<<<<< HEAD
+=======
+import com.jayway.restassured.http.ContentType;
+>>>>>>> featureAuth
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+<<<<<<< HEAD
 import org.springframework.test.context.junit4.SpringRunner;
 
+=======
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static com.jayway.restassured.RestAssured.given;
+>>>>>>> featureAuth
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 /**
@@ -28,4 +39,34 @@ public class AuthRepositoryJdbcIt {
         AuthEntity authEntity = authRepositoryJdbc.tryAuth(login, pwd);
         assertThat(authEntity).isNotNull();
     }
+<<<<<<< HEAD
+=======
+
+    @Test
+    @DirtiesContext
+    public void should_create_account(){
+        AuthDto dto = AuthDto.builder()
+                .id(Long.valueOf(4))
+                .login("testInsertLogin")
+                .pwd("testInsertMdp")
+                .build();
+        authRepositoryJdbc.addAuth(dto.getLogin(), dto.getPwd());
+        AuthEntity authEntity = authRepositoryJdbc.tryAuth(dto.getLogin(), "testInsertMdp");
+        assertThat(authEntity).isNotNull();
+    }
+
+    @Test
+    public void should_update_pwd(){
+        authRepositoryJdbc.updateAuth("test1", "testUpdatePwd");
+        AuthEntity authEntity = authRepositoryJdbc.tryAuth("test1", "testUpdatePwd");
+        assertThat(authEntity).isNotNull();
+    }
+
+    public void should_insert_one(){
+        String login = "test1";
+        String pwd = "test1";
+        authRepositoryJdbc.addAuth(login, pwd);
+
+    }
+>>>>>>> featureAuth
 }

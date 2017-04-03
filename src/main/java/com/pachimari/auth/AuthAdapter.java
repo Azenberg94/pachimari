@@ -6,17 +6,17 @@ package com.pachimari.auth;
 public class AuthAdapter {
 
 
-    public static AuthEntity toAuthDto(AuthDto authDto){
+    public static AuthEntity toAuthEntity(AuthDto authDto){
         return AuthEntity.builder()
                 .login(authDto.getLogin())
                 .pwd(authDto.getPwd())
                 .build();
     }
 
-   public static AuthDto toAccount(AuthEntity authEntity){
+   public static AuthDto toAuthDto(AuthEntity authEntity){
         return AuthDto.builder()
                 .login(authEntity.getLogin())
                 .pwd(authEntity.getPwd())
                 .build();
-    }
+   }
 }
