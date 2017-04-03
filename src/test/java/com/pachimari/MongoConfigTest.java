@@ -12,10 +12,8 @@ import com.mongodb.Mongo;
 
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-/*
+
 @Configuration
-@EnableAutoConfiguration
-@EnableMongoRepositories(basePackages = "com.pachimari.user.repository")
 public class MongoConfigTest extends  AbstractMongoConfiguration {
     @Autowired
     private Environment env;
@@ -35,4 +33,3 @@ public class MongoConfigTest extends  AbstractMongoConfiguration {
     }
 
 }
-*/

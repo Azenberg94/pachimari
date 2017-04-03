@@ -1,6 +1,8 @@
 package com.pachimari.user;
 
 import com.jayway.restassured.RestAssured;
+import com.pachimari.MongoConfigTest;
+import com.pachimari.PachimariApplication;
 import com.pachimari.user.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -27,7 +29,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  * Created by Pierre on 02/03/2017.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+@SpringBootTest(webEnvironment = RANDOM_PORT,classes = {PachimariApplication.class,MongoConfigTest.class})
 public class UserControllerIT {
     @LocalServerPort
     private int localServerPort;
