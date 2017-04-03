@@ -25,15 +25,13 @@ public class User {
     @GeneratedValue
     private Integer id;
 
-
-
-
-
     private String name;
 
     private String email;
 
     private String login;
+
+    private String type;
 
 }
 

@@ -33,6 +33,9 @@ public class UserDTO {
     @NotNull
     @NotBlank
     private String email;
+    @NotNull
+    @NotBlank
+    private String type;
 
 
     public Integer getId() {
@@ -53,4 +56,11 @@ public class UserDTO {
     }
 
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

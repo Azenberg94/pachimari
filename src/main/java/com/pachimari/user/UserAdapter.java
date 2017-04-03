@@ -15,6 +15,7 @@ public  class UserAdapter {
                 .login(userDTO.getLogin())
                 .email(userDTO.getEmail())
                 .name(userDTO.getName())
+                .type(userDTO.getType())
                 .build();
     }
 
@@ -24,6 +25,7 @@ public  class UserAdapter {
                 .login(userEntity.getLogin())
                 .email(userEntity.getEmail())
                 .name(userEntity.getName())
+                .type(userEntity.getType())
                 .build();
     }
     public static List<UserDTO> listToUserDTO(List<User> list){
