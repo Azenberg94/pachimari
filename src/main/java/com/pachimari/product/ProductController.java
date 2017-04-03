@@ -1,6 +1,7 @@
 package com.pachimari.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,19 @@ public class ProductController {
     @Autowired
     List<ProductDto> productDTOS;
 
+    @GetMapping("/find/{name}/{brand}/{type}")
+    public List<ProductDto> getProductByOptionalParameters(@PathVariable("name") String name, @PathVariable("brand") String brand, @PathVariable("type") Integer type) {
+        name = (name.equals("any")) ? null : name;
+        brand = (brand.equals("any")) ? null : brand;
+        type = (type == 0) ? null : type;
+        productDTOS.clear();
+        List<ProductEntity> productEntities = productRepository.findByOptionalParameters(name, brand, type);
+        for(ProductEntity product: productEntities){
+            productDTOS.add(ProductAdapter.fromProductToDto(product));
+        }
+        return productDTOS;
+    }
+
     @GetMapping
     public List<ProductDto> getAllProducts() {
         productDTOS.clear();
@@ -43,5 +57,17 @@ public class ProductController {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{product_id}")
                 .buildAndExpand(productDto).toUri();
         return ResponseEntity.created(location).body(productDto);
+    }
+
+    @DeleteMapping()
+    public ResponseEntity deleteProduct(@RequestBody  String id){
+        ProductEntity productToDelete = productRepository.findById(id);
+        productRepository.delete(productToDelete);
+        return new ResponseEntity(ProductAdapter.fromProductToDto(productToDelete),HttpStatus.OK);
+    }
+    @PutMapping()
+    public ResponseEntity updateProduct(@RequestBody @Valid ProductDto productDto,  BindingResult bindingResult){
+        productRepository.save(ProductAdapter.fromDtoToProduct(productDto));
+        return new ResponseEntity(productDto,HttpStatus.OK);
     }
 }

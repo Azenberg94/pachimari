@@ -1,5 +1,8 @@
 package com.pachimari.product;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by andrem on 23/03/2017.
  */
@@ -27,4 +30,11 @@ public class ProductAdapter {
                 .build();
     }
 
+    public static List<ProductDto> fromProductListToDtoList(List<ProductEntity> productEntities){
+        List<ProductDto> productDtoList = new ArrayList<ProductDto>();
+        for(ProductEntity productEntity : productEntities){
+            productDtoList.add(fromProductToDto(productEntity));
+        }
+        return  productDtoList;
+    }
 }
