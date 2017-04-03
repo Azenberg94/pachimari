@@ -3,6 +3,8 @@ module.exports = function(app, models){
     var passwordHash = require('password-hash');
     var msgError="";
     var bcrypt = require('bcrypt-nodejs');
+	var request = require('request');
+
  
 	// =====================================
 	// SIGNUP ==============================
@@ -34,36 +36,38 @@ module.exports = function(app, models){
              msgError = "Veuillez saisir votre age ! "  
         }else{
 
-			
-            var User = models.Users;
+					
+			request.get(
+				"http://localhost:8090/user/login/"+req.body.username ,
+				function (error, response, body) {
+					if (!error && response.statusCode == 200) {
+						console.log("my body : " + body)
+						msgError="Ce nom de compte est déjà utilisé ! ";
+					}else{
+						request({
+							url: "http://localhost:8090/user/" ,
+							method: "POST",
+						 headers:{ 
+								'Content-Type': 'application/json'
+							},
+							json:{ 
+							  "id": 6,
+							  "name": "aboullll",
+							  "login": "gfd",
+							  "email": "tegfdst",
+							  "type": "user"
 
-            var requestIfExist = {
-                attributes: ['username'],
-               	where: {
-               		username : req.body.username,
-               	}
-            };
-
-            User.findAll(requestIfExist).then(function(results) {
-                if(results.length>0){
-                    msgError = "Identifiant non disponible"
-                }else{
-                 
-                    User.create({
-                        username: req.body.username,
-                        password: bcrypt.hashSync(req.body.password, null, null),
-                        admin : 0,
-                        firstName : req.body.firstName,
-                        name : req.body.name,
-                        picture : dirDfaut,
-                        age : req.body.age,
-                        bio : req.body.bio
-
-                    })  
-                }
-            });
-
-
+								}, function (error, response, body) { 
+									if (!error && response.statusCode == 200) {
+										console.log("OK");
+									}else{
+										console.log("Pas ok");
+									}
+								}
+						})
+					}
+				}
+			);
 
         }
 

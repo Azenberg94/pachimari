@@ -33,5 +33,13 @@ public class User {
 
     private String type;
 
+
+    public User(String name, String login, String email, String type) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.type = type;
+    }
+
 }
 

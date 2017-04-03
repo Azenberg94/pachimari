@@ -37,6 +37,12 @@ public class UserDTO {
     @NotBlank
     private String type;
 
+    public UserDTO(String name, String login, String email, String type) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.type = type;
+    }
 
     public Integer getId() {
             return id;

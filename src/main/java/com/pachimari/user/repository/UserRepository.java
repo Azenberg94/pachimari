@@ -11,7 +11,6 @@ import java.util.List;
  * Created by Pierre on 25/03/2017.
  */
 @Repository
-
 public interface UserRepository  extends MongoRepository<User,Integer>{
     public User findById(Integer id);
     public User findByName(String name);

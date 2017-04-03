@@ -2,6 +2,7 @@ package com.pachimari.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,28 +23,35 @@ public class UserController {
     @GetMapping()
     public List<UserDTO> getAccountList()
     {
+
         return userService.getList();
     }
+    @GetMapping("/login/{login}")
+    public ResponseEntity getUserByLogin(@PathVariable("login") String login)
+    {
 
+        return new ResponseEntity(userService.getUserByLogin(login),HttpStatus.OK);
+    }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     class BadRequestException extends RuntimeException{
-    }
 
+    }
     @PostMapping()
-    public UserDTO createAccount(@RequestBody @Valid UserDTO accountEntity, BindingResult bindingResult){
+    public ResponseEntity createAccount(@RequestBody @Valid UserDTO accountEntity, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new BadRequestException();
         }
-      return  userService.createAccount(accountEntity);
+
+        return  new ResponseEntity(userService.createAccount(accountEntity),HttpStatus.CREATED);
     }
 
     @DeleteMapping()
-    public UserDTO deleteAccount(@RequestBody  Integer id){
-        return userService.deleteAccount(id);
+    public ResponseEntity deleteAccount(@RequestBody  Integer id){
+        return new ResponseEntity(userService.deleteAccount(id),HttpStatus.OK);
     }
     @PutMapping()
-    public UserDTO updateAccount(@RequestBody @Valid UserDTO userDTO,  BindingResult bindingResult){
-        return userService.updateAccount(userDTO);
+    public ResponseEntity updateAccount(@RequestBody @Valid UserDTO userDTO,  BindingResult bindingResult){
+        return new ResponseEntity(userService.updateAccount(userDTO),HttpStatus.OK);
     }
 
 
