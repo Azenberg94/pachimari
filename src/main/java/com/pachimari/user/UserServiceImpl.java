@@ -23,6 +23,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDTO> getListAdmin() {
+        return UserAdapter.listToUserDTO(userRepository.findByType("admin"));
+    }
+
+    @Override
     public UserDTO createAccount(UserDTO userDTO) {
         User user=User.builder().id(userDTO.getId()).email(userDTO.getEmail()).login(userDTO.getLogin()).name(userDTO.getName()).type(userDTO.getType()).build();
         userRepository.insert(user);

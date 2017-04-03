@@ -22,18 +22,17 @@ public class UserController {
     @GetMapping()
     public List<UserDTO> getAccountList()
     {
-
         return userService.getList();
     }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     class BadRequestException extends RuntimeException{
-
     }
+
     @PostMapping()
     public UserDTO createAccount(@RequestBody @Valid UserDTO accountEntity, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new BadRequestException();
-
         }
       return  userService.createAccount(accountEntity);
     }

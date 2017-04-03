@@ -1,23 +1,15 @@
 package com.pachimari.auth;
 
-<<<<<<< HEAD
-=======
 import com.jayway.restassured.http.ContentType;
->>>>>>> featureAuth
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-<<<<<<< HEAD
-import org.springframework.test.context.junit4.SpringRunner;
-
-=======
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.jayway.restassured.RestAssured.given;
->>>>>>> featureAuth
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 /**
@@ -39,8 +31,6 @@ public class AuthRepositoryJdbcIt {
         AuthEntity authEntity = authRepositoryJdbc.tryAuth(login, pwd);
         assertThat(authEntity).isNotNull();
     }
-<<<<<<< HEAD
-=======
 
     @Test
     @DirtiesContext
@@ -68,5 +58,4 @@ public class AuthRepositoryJdbcIt {
         authRepositoryJdbc.addAuth(login, pwd);
 
     }
->>>>>>> featureAuth
 }

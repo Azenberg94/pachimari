@@ -9,7 +9,7 @@ module.exports = function(app, models){
       res.redirect('/profile');
 		// render the page and pass in any flash data if it exists
     else*/
-    res.render('login.ejs');
+		res.render('login.ejs', { msgError: "" });
 	});
 
 	// process the login form

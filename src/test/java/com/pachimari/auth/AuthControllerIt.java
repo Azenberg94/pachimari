@@ -28,26 +28,22 @@ public class AuthControllerIt {
         RestAssured.port = localServerPort;
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> featureAuth
     @Test
     public void should_get_one(){
         AuthDto dto = AuthDto.builder()
-            .login("test1")
-            .pwd("test2")
-            .build();
+                .login("test1")
+                .pwd("test2")
+                .build();
         given()
-            .log().all()
-            .contentType(ContentType.JSON)
-            .body(dto)
-        .when()
-            .post("/auth")
-        .then()
-            .log().all()
-            .statusCode(200)
-            .body("$",equalTo(0));
+                .log().all()
+                .contentType(ContentType.JSON)
+                .body(dto)
+                .when()
+                .post("/auth")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("$",equalTo(0));
     }
 
 }
