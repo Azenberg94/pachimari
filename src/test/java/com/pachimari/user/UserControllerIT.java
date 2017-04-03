@@ -69,13 +69,12 @@ public class UserControllerIT {
     @Test
     public void should_create_user(){
 
-        UserDTO userDTO=UserDTO.builder().id(5).name("fifth").login("test").email("test@email.fr").build();
+        UserDTO userDTO=UserDTO.builder().id(5).name("fifth").login("test").email("test@email.fr").type("admin").build();
 
         given().log().all().contentType(JSON).body(userDTO).when()
                 .post("/user")
                 .then()
-                .statusCode(200)
-
+                .statusCode(201)
                 .body("name",is("fifth")).log().all();
     }
 

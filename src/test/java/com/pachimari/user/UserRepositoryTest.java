@@ -3,6 +3,7 @@ package com.pachimari.user;
 import com.jayway.restassured.RestAssured;
 import com.pachimari.MongoConfig;
 
+import com.pachimari.MongoConfigTest;
 import com.pachimari.user.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;

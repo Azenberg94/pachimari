@@ -49,4 +49,9 @@ public class UserServiceImpl implements UserService {
         return userDTO;
     }
 
+    @Override
+    public UserDTO getUserByLogin(String login) {
+        return UserAdapter.toUserDTO(userRepository.findByLogin(login));
+    }
+
 }
