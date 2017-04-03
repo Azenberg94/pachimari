@@ -1,24 +1,24 @@
 package com.pachimari;
 
 
+import cz.jirutka.spring.embedmongo.EmbeddedMongoBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
-
 import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.github.fakemongo.Fongo;
+
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 /*
 @Configuration
+@EnableAutoConfiguration
 @EnableMongoRepositories(basePackages = "com.pachimari.user.repository")
-
-=======
-@Configuration
->>>>>>> a4e2acbd441a0930c399f790b619c38103b552ae
 public class MongoConfigTest extends  AbstractMongoConfiguration {
-
+    @Autowired
+    private Environment env;
 
     @Override
     public String getDatabaseName() {
@@ -26,10 +26,12 @@ public class MongoConfigTest extends  AbstractMongoConfiguration {
     }
 
     @Override
-    @Bean
+    @Bean(destroyMethod="close")
     public Mongo mongo() throws Exception {
-<<<<<<< HEAD
-        return new Fongo(getDatabaseName()).getMongo();
+        return new EmbeddedMongoBuilder()
+                .bindIp("127.0.0.1")
+                .port(12345)
+                .build();
     }
 
 }*/
