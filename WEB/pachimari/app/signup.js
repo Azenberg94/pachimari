@@ -4,7 +4,7 @@ module.exports = function(app, models){
     var msgError="";
     var bcrypt = require('bcrypt-nodejs');
 	var request = require('request');
-
+	var api = models.myApi; 
  
 	// =====================================
 	// SIGNUP ==============================
@@ -32,29 +32,35 @@ module.exports = function(app, models){
             msgError = "Veuillez saisir votre nom ! "
         }else if(!req.body.name){
              msgError = "Veuillez saisir votre prénom ! "
-        }else if(!req.body.age){
-             msgError = "Veuillez saisir votre age ! "  
+        }else if(!req.body.mail){
+             msgError = "Veuillez saisir votre mail ! "  
+        }else if(!req.body.adresse){
+             msgError = "Veuillez saisir votre adresse ! "  
+        }else if(!req.body.cp){
+             msgError = "Veuillez saisir votre CP ! "  
+        }else if(!req.body.ville){
+             msgError = "Veuillez saisir votre ville ! "  
         }else{
-
-					
 			request.get(
-				"http://localhost:8090/user/login/"+req.body.username ,
+				"http://"+api.host+"/user/login/"+req.body.username ,
 				function (error, response, body) {
 					if (!error && response.statusCode == 200) {
-						console.log("my body : " + body)
 						msgError="Ce nom de compte est déjà utilisé ! ";
 					}else{
-						request({
-							url: "http://localhost:8090/user/" ,
+						/*request({
+							url: "http://"+api.host+"/user/" ,
 							method: "POST",
 						 headers:{ 
 								'Content-Type': 'application/json'
 							},
 							json:{ 
-							  "id": 6,
-							  "name": "aboullll",
-							  "login": "gfd",
-							  "email": "tegfdst",
+							  "lastName": req.body.name,
+							  "name":req.body.firstName,
+							  "login": req.body.username,
+							  "email": req.body.mail,
+							  "addresse" : req.body.adresse,
+							  "cp" : req.body.cp,
+							  "ville" : req.body.ville,
 							  "type": "user"
 
 								}, function (error, response, body) { 
@@ -64,6 +70,26 @@ module.exports = function(app, models){
 										console.log("Pas ok");
 									}
 								}
+						})*/
+						
+						request({
+							url: "http://"+api.host+"/auth/add/" ,
+							method: "POST",
+							headers:{ 
+								'Content-Type': 'application/json'
+							},
+							json:{ 
+							  "login": req.body.username,
+							  "pwd": req.body.password
+
+								}
+							,function (error, response, body) { 
+								if(!error && response.statusCode == 200) {
+									msgError = "Inscription Validé"
+								} else {
+									msgError = "Erreur lors de l'inscription. Merci de réessayer."
+								}
+							}
 						})
 					}
 				}
@@ -72,11 +98,9 @@ module.exports = function(app, models){
         }
 
 
-        if(msgError == ""){
-            res.redirect('/');
-        }else{
-            res.render('signup.ejs',{msgError: msgError});
-        }
+        
+        res.render('signup.ejs',{msgError: msgError});
+        
 
 	});
 

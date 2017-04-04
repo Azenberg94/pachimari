@@ -40,13 +40,13 @@ public class UserController {
     public ResponseEntity createAccount(@RequestBody @Valid UserDTO accountEntity, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new BadRequestException();
-        }
 
+        }
         return  new ResponseEntity(userService.createAccount(accountEntity),HttpStatus.CREATED);
     }
 
     @DeleteMapping()
-    public ResponseEntity deleteAccount(@RequestBody  Integer id){
+    public ResponseEntity deleteAccount(@RequestBody  String id){
         return new ResponseEntity(userService.deleteAccount(id),HttpStatus.OK);
     }
     @PutMapping()

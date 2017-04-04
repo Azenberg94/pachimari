@@ -14,7 +14,7 @@
 
 <div class="col-sm-6 col-sm-offset-3">
 
-	<h1><span class="fa fa-sign-in"></span>Inscription</h1>
+	<h1><span class="fa fa-sign-in"></span> Inscription</h1>
 
 	<!-- LOGIN FORM -->
 	<form action="/signup" method="post">
@@ -42,8 +42,20 @@
             <input type="text" class="form-control" name="name" required>
         </div>
         <div class="form-group">
-            <label>Age</label>
-            <input type="number" class="form-control" name="age" max = "110" min ="0" required>
+            <label>Mail</label>
+            <input type="text" class="form-control" name="mail" required>
+        </div>
+		<div class="form-group">
+            <label>Adresse</label>
+            <input type="text" class="form-control" name="adresse" required>
+        </div>
+		<div class="form-group">
+            <label>CP</label>
+            <input type="number" class="form-control" name="cp" required>
+        </div>
+		<div class="form-group">
+            <label>Ville</label>
+            <input type="text" class="form-control" name="ville" required>
         </div>
 
 		<button type="submit" class="btn btn-warning btn-lg">Valider</button>
@@ -52,7 +64,7 @@
 	<hr>
 
 	<p>Déjà un compte? <a href="/login">Connexion</a></p>
-	<p><a href="/">Accueil</a>.</p>
+	<p><br><a href="/">Accueil</a></p>
 	
 </div>
 

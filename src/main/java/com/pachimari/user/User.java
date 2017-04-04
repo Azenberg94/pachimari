@@ -23,7 +23,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private String id;
 
     private String name;
 
@@ -33,13 +33,4 @@ public class User {
 
     private String type;
 
-
-    public User(String name, String login, String email, String type) {
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.type = type;
-    }
-
 }
-
