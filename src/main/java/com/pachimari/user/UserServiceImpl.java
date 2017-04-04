@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO deleteAccount(Integer id) {
+    public UserDTO deleteAccount(String id) {
         User user=userRepository.findById(id);
         UserDTO userDTO = UserAdapter.toUserDTO(user);
         userRepository.delete(user.getId());

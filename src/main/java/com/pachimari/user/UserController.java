@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @DeleteMapping()
-    public ResponseEntity deleteAccount(@RequestBody  Integer id){
+    public ResponseEntity deleteAccount(@RequestBody  String id){
         return new ResponseEntity(userService.deleteAccount(id),HttpStatus.OK);
     }
     @PutMapping()

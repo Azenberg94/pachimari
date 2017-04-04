@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
+
+import javax.persistence.GeneratedValue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,8 +18,8 @@ import javax.validation.constraints.Size;
 public class UserDTO {
 
     @NotNull
-
-    private Integer id;
+    @GeneratedValue
+    private String id;
 
 
 
@@ -38,7 +40,7 @@ public class UserDTO {
     private String type;
 
 
-    public Integer getId() {
+    public String getId() {
             return id;
         }
 

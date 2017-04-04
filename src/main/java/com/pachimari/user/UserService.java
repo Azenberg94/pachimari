@@ -12,7 +12,7 @@ public interface UserService {
 
     public UserDTO createAccount(UserDTO userDTO);
 
-    public UserDTO deleteAccount(Integer id);
+    public UserDTO deleteAccount(String id);
     public UserDTO updateAccount(UserDTO userDTO);
     public UserDTO getUserByLogin(String login);
 
