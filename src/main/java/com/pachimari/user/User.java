@@ -2,9 +2,9 @@ package com.pachimari.user;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 
 
@@ -22,7 +22,6 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue
     private String id;
 
     private String name;
