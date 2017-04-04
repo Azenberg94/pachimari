@@ -19,6 +19,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
+
     @Autowired
     private ProductsRepository productRepository;
     @Autowired

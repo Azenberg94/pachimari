@@ -11,18 +11,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-@Table(name = "auth")
 public class AuthEntity {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
 
-    @Column
     private String login;
 
-    @Column
     private String pwd;
 
 }

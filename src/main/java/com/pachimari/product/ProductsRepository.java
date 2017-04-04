@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import java.util.List;
+
 
 /**
  * Created by andrem on 27/03/2017.
