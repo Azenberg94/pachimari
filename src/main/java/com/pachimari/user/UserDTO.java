@@ -3,8 +3,6 @@ package com.pachimari.user;
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -17,6 +15,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+
 
     private String id;
 
