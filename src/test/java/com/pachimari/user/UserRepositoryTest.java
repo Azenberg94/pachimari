@@ -34,8 +34,8 @@ public class UserRepositoryTest {
     @Before
     public void init(){
         mongoTemplate.dropCollection(User.class);
-        mongoTemplate.save(User.builder().id("1").email("test@test.fr").name("test").login("test1").build());
-        mongoTemplate.save(User.builder().id("2").email("test2@test.fr").name("test2").login("test3").build());
+        mongoTemplate.save(User.builder().id("1").email("test@test.fr").name("test").login("test1").addresse("36 rue houdart").ville("roissy").cp("95700").build());
+        mongoTemplate.save(User.builder().id("2").email("test2@test.fr").name("test2").login("test3").addresse("36 rue cdg").ville("roissy").cp("95700").build());
         RestAssured.port=localServerPort;
     }
     @After

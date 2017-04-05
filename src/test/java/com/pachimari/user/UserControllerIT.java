@@ -40,8 +40,8 @@ public class UserControllerIT {
     @Before
     public void init(){
         mongoTemplate.dropCollection(User.class);
-        mongoTemplate.save(User.builder().id("0").email("test@test.fr").name("test").login("test1").build());
-        mongoTemplate.save(User.builder().id("1").email("test2@test.fr").name("test2").login("test2").build());
+        mongoTemplate.save(User.builder().id("0").email("test@test.fr").name("test").lastName("lasttest").login("test1").addresse("36 rue houdart").ville("roissy").cp("95700").type("admin").build());
+        mongoTemplate.save(User.builder().id("1").email("test2@test.fr").name("test2").login("test2").addresse("36 rue houdart").ville("roissy").cp("95700").type("user").build());
         RestAssured.port=localServerPort;
     }
     @After
@@ -63,7 +63,7 @@ public class UserControllerIT {
     @Test
     public void should_create_user(){
 
-        UserDTO userDTO=UserDTO.builder().id("2").name("fifth").login("test").email("test@email.fr").type("admin").build();
+        UserDTO userDTO=UserDTO.builder().id("2").name("fifth").lastName("fifthlast").login("test").email("test@email.fr").type("admin").addresse("36 rue houdart").ville("roissy").cp("95700").build();
 
         given().log().all().contentType(JSON).body(userDTO).when()
                 .post("/user")
