@@ -47,7 +47,7 @@ module.exports = function(app, models){
 					if (!error && response.statusCode == 200) {
 						msgError="Ce nom de compte est déjà utilisé ! ";
 					}else{
-						/*request({
+						request({
 							url: "http://"+api.host+"/user/" ,
 							method: "POST",
 						 headers:{ 
@@ -58,7 +58,7 @@ module.exports = function(app, models){
 							  "name":req.body.firstName,
 							  "login": req.body.username,
 							  "email": req.body.mail,
-							  "addresse" : req.body.adresse,
+							  "adresse" : req.body.adresse,
 							  "cp" : req.body.cp,
 							  "ville" : req.body.ville,
 							  "type": "user"
@@ -70,7 +70,7 @@ module.exports = function(app, models){
 										console.log("Pas ok");
 									}
 								}
-						})*/
+						})
 						
 						request({
 							url: "http://"+api.host+"/auth/add/" ,

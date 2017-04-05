@@ -1,43 +1,29 @@
 module.exports = function(app, models){
 
     var msgError="";
+	var rp = require('request-promise');
 	var request = require('request');
 	var api = models.myApi; 
-	var listProduct = loadProductList();
 	
-	function loadProductList(){
-		request("http://"+api.host+"/product/" ,
-				function (error, response, body) { 
-					if(body){
-						return(listProduct = JSON.parse(body));
-					}else{return null;}
-				}
-		)
 
-		
-	}
 	
- 
+				
 	// =====================================
 	// addProduct ==============================
 	// =====================================
 	// show the addproduct form
 	app.get('/addProduct', function(req, res, next) {
-		listProduct = loadProductList();
-		// render the page and pass in any flash data if it exists
-		res.render('addProduct.ejs', {msgError:"", listProduct : listProduct});
+		rp("http://"+api.host+"/product/" ).then(function(body){
+			res.render('addProduct.ejs', {msgError:"", listProduct :  JSON.parse(body)});
+		});
+			
 	});
-
 	
-	app.get('/addProduct/validation', function(req, res, next) {
-		listProduct = loadProductList();
-		// render the page and pass in any flash data if it exists
-		res.render('addProduct.ejs', {msgError:"Action effectuée avec succes ! ", listProduct : listProduct});
-	});
+
 
 	// process the signup form
 	app.post('/addProduct', function (req, res, next) {
-
+		
         if (!req.body.name){
             msgError = "Veuillez saisir un nom !"
         }else if (!req.body.brand){
@@ -47,12 +33,6 @@ module.exports = function(app, models){
 		}else if(!req.body.price){
             msgError = "Veuillez saisir un prix ! "
         }else{
-			
-			console.log("Name : " + req.body.name)
-			console.log("brand : " + req.body.brand)
-			console.log("typeId : " + req.body.typeId)
-			console.log("price : " + req.body.price)
-			console.log("imageURL : " + req.body.imageURL)
 			
 				request({
 					url: "http://"+api.host+"/product/" ,
@@ -91,8 +71,9 @@ module.exports = function(app, models){
 			);*/
 			//listProduct = loadProductList();
         }
-        listProduct = loadProductList();
-        res.redirect('/addProduct/validation');
+		
+        
+        res.redirect('/addProduct');
         
 
 	});

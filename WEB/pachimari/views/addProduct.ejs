@@ -3,15 +3,11 @@
 <html>
 <head>
 	<title>Administration Produit</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
-	<style>
-		body 		{ padding-top:80px; }
-	</style>
+	<% include ./partials/header %>
 </head>
 <body>
+<% include ./partials/navbar %>
 <div class="container">
-<p><a href="/">Accueil</a></p>
 
 
 <div class="col-sm-6 col-sm-offset-3">
@@ -64,8 +60,8 @@
 			<th>Image</th>
 		</tr>
 		<%
-		
-		for (var i = 0; i<listProduct.length; i++){
+		if(listProduct){
+			for (var i = 0; i<listProduct.length; i++){
 		
 		%>
 		
@@ -78,7 +74,7 @@
 		</tr>
 		
 		<%
-		}
+		}}
 		%>
 	</table>
 
