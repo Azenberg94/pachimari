@@ -15,8 +15,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 public class MongoConfigTest extends  AbstractMongoConfiguration {
-    @Autowired
-    private Environment env;
 
     @Override
     public String getDatabaseName() {
