@@ -1,11 +1,13 @@
 package com.pachimari.user;
 
+import com.pachimari.order.model.OrderEntity;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
-
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -18,11 +20,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Document(collection="user")
+@Table(name = "users")
+@ToString(exclude = "orders")
+@EqualsAndHashCode(exclude = "orders")
+/*@Document(collection="user")*/
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     private String name;
@@ -32,6 +37,9 @@ public class User {
     private String login;
 
     private String type;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<OrderEntity> orders = new HashSet<>(0);
 
 }
 
