@@ -1,13 +1,14 @@
 package com.pachimari.product;
 
 import com.jayway.restassured.RestAssured;
+import com.pachimari.MongoConfigTest;
+import com.pachimari.PachimariApplication;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;
-import de.flapdoodle.embed.process.store.ArtifactStoreBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -22,12 +23,12 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  * Created by andrem on 23/03/2017.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+@SpringBootTest(webEnvironment = RANDOM_PORT,classes = {PachimariApplication.class,MongoConfigTest.class})
 public class ProductControllerIT {
     @LocalServerPort
     private int localServerPort;
     @Autowired
-    ProductsRepository repository;
+    ProductRepository repository;
     @Autowired
     private MongoTemplate mongoTemplate;
     @Before

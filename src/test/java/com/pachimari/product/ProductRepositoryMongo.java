@@ -1,5 +1,7 @@
 package com.pachimari.product;
 
+import com.pachimari.MongoConfigTest;
+import com.pachimari.PachimariApplication;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,22 +9,21 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 /**
  * Created by andrem on 28/03/2017.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = RANDOM_PORT,classes = {PachimariApplication.class,MongoConfigTest.class})
 public class ProductRepositoryMongo {
     @Autowired
-    ProductsRepository repository;
+    ProductRepository repository;
     @Autowired
     private MongoTemplate mongoTemplate;
 
