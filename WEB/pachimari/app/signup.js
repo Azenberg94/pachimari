@@ -61,7 +61,7 @@ module.exports = function(app, models){
 					next();
 				}
 			}).catch(function (err) {
-					console.log("Error rp1 : " + err)
+					//console.log("Error rp1 : " + err)
 			}).then(function(){
 				rp({
 					url: "http://"+api.host+"/user/" ,
@@ -74,7 +74,7 @@ module.exports = function(app, models){
 					  "name":req.body.firstName,
 					  "login": req.body.username,
 					  "email": req.body.mail,
-					  "adresse" : req.body.adresse,
+					  "addresse" : req.body.adresse,
 					  "cp" : req.body.cp,
 					  "ville" : req.body.ville,
 					  "type": "user"
@@ -83,7 +83,8 @@ module.exports = function(app, models){
 				}).then(function(body){
 					console.log("Body 1 : " + body)
 				}).catch(function (err) {
-					console.log("Error body1 : " + err)
+					res.render('signup.ejs', {msgError:"Erreur veuillez lors de l'inscription. Veuillez recommmencer !"});
+					next();
 				});
 				
 				rp({
@@ -99,75 +100,17 @@ module.exports = function(app, models){
 				}).then(function(body){
 					console.log("Body 2 : " + body)
 				}).catch(function (err) {
-					console.log("Error body2 : " + err)
+					res.render('signup.ejs', {msgError:"Erreur veuillez lors de l'inscription. Veuillez recommmencer !"});
+					next();
 				});
 				
 			}).then(function(){
 				res.render('signup.ejs', {msgError:"Inscription validé !"});
+				next();
 			});
 			
-			/*
-			request.get(
-				"http://"+api.host+"/user/login/"+req.body.username ,
-				function (error, response, body) {
-					if (!error && response.statusCode == 200) {
-						msgError="Ce nom de compte est déjà utilisé ! ";
-					}else{
-						request({
-							url: "http://"+api.host+"/user/" ,
-							method: "POST",
-							headers:{ 
-								'Content-Type': 'application/json'
-							},
-							json:{ 
-							  "lastName": req.body.name,
-							  "name":req.body.firstName,
-							  "login": req.body.username,
-							  "email": req.body.mail,
-							  "adresse" : req.body.adresse,
-							  "cp" : req.body.cp,
-							  "ville" : req.body.ville,
-							  "type": "user"
 
-								}, function (error, response, body) { 
-									if (!error && response.statusCode == 200) {
-										console.log("OK");
-									}else{
-										console.log("Pas ok");
-									}
-								}
-						})
-						
-						request({
-							url: "http://"+api.host+"/auth/add/" ,
-							method: "POST",
-							headers:{ 
-								'Content-Type': 'application/json'
-							},
-							json:{ 
-							  "login": req.body.username,
-							  "pwd": req.body.password
-
-								}
-							,function (error, response, body) { 
-								if(!error && response.statusCode == 200) {
-									msgError = "Inscription Validé"
-								} else {
-									msgError = "Erreur lors de l'inscription. Merci de réessayer."
-								}
-							}
-						})
-					}
-				}
-			);
-*/
-        }
-
-
-        
-        
-        
-
+        }  
 	});
 
 
