@@ -24,7 +24,6 @@ public class AuthDto {
 
     public AuthDto(String login, String pwd){
         this.login=login;
-        this.pwd=pwd;
     }
 
 }

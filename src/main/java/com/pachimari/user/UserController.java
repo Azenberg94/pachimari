@@ -47,6 +47,7 @@ public class UserController {
     public ResponseEntity deleteAccount(@RequestBody  String id){
         return new ResponseEntity(userService.deleteAccount(id),HttpStatus.OK);
     }
+
     @PutMapping()
     public ResponseEntity updateAccount(@RequestBody @Valid UserDTO userDTO,  BindingResult bindingResult){
         return new ResponseEntity(userService.updateAccount(userDTO),HttpStatus.OK);

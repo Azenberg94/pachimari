@@ -12,11 +12,11 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-		<% if(!session.admin) { %>
+		<% if(!session.type) { %>
         <li><a href="/login">Connexion</a></li>
 		<li><a href="/signup">Inscription</a></li>
 		<% } else {
-			if(session.admin == "admin"){
+			if(session.type == "admin"){
 		%>
 		<li><a href="/adminProduct">Gestion Produit</a></li>
 		<li><a href="/adminUser">Gestion Utilisateur</a></li>

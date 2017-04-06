@@ -50,12 +50,13 @@ public class ProductController {
         return productService.getProductById(id);
     }
     @DeleteMapping()
-    public ResponseEntity deleteProduct(@RequestBody  String id, BindingResult bindingResult){
+    public ResponseEntity deleteProduct(@RequestBody String id, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new InvalidException();
         }
         return new ResponseEntity(productService.deleteProduct(id),HttpStatus.OK);
     }
+
     @PutMapping()
     public ResponseEntity updateProduct(@RequestBody @Valid ProductDto productDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){

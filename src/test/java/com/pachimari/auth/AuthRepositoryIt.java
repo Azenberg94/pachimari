@@ -47,7 +47,7 @@ public class AuthRepositoryIt {
     public void should_find_one(){
         String login = "test1";
         String pwd = "test1";
-        AuthEntity authEntity = authRepository.findByLoginAndPwd(login, pwd);
+        AuthEntity authEntity = authRepository.findByLogin(login);
         assertThat(authEntity).isNotNull();
     }
 

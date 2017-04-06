@@ -1,12 +1,9 @@
 module.exports = function(app, models){
 
-    var passwordHash = require('password-hash');
     var msgError="";
-    var bcrypt = require('bcrypt-nodejs');
 	var rp = require('request-promise')
 	var request = require('request');
-	var requestoption1;
-	var requestoption2;
+	
 	
 	var api = models.myApi; 
  
@@ -105,7 +102,7 @@ module.exports = function(app, models){
 						},
 						json:{ 
 						  "login": req.body.username,
-						  "pwd": bcrypt.hashSync(req.body.password)
+						  "pwd": req.body.password
 						}
 					}).then(function(body){
 						//console.log("Body 2 : " + body)
