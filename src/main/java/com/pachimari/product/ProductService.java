@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface ProductService {
     public List<ProductDto> getAllProducts();
-    public List<ProductDto> getSelectedProducts(String name, String brand, Integer typeId);
+    public List<ProductDto> getSelectedProducts(String name, String brand, String typeId);
 
     public ProductDto createProduct(ProductDto productDto);
 

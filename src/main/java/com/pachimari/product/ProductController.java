@@ -23,10 +23,10 @@ public class ProductController {
     private ProductServiceImpl productService;
 
     @GetMapping("/find/{name}/{brand}/{type}")
-    public List<ProductDto> getProductByOptionalParameters(@PathVariable("name") String name, @PathVariable("brand") String brand, @PathVariable("type") Integer type) {
+    public List<ProductDto> getProductByOptionalParameters(@PathVariable("name") String name, @PathVariable("brand") String brand, @PathVariable("type") String type) {
         name = (name.equals("any")) ? null : name;
         brand = (brand.equals("any")) ? null : brand;
-        type = (type == 0) ? null : type;
+        type = (type.equals("any")) ? null : type;
         return productService.getSelectedProducts(name, brand, type);
     }
 

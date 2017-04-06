@@ -17,7 +17,7 @@ public class ProductServiceImpl implements ProductService {
         return ProductAdapter.fromProductListToDtoList(productRepository.findAll());
     }
     @Override
-    public List<ProductDto> getSelectedProducts(String name, String brand, Integer typeId){
+    public List<ProductDto> getSelectedProducts(String name, String brand, String typeId){
         return ProductAdapter.fromProductListToDtoList(productRepository.findByOptionalParameters(name, brand, typeId));
     }
     @Override

@@ -32,11 +32,11 @@ public class ProductRepositoryMongo {
         mongoTemplate.dropCollection(ProductEntity.class);
         repository.deleteAll();
 
-        mongoTemplate.save(ProductEntity.builder().id("1").name("test1").brand("marque1").typeId(1).price(650.50).imageURL("images/sm01.jpg").build());
-        mongoTemplate.save(ProductEntity.builder().id("2").name("test2").brand("marque2").typeId(2).price(570.72).imageURL("images/sm01.jpg").build());
-        mongoTemplate.save(ProductEntity.builder().id("3").name("test3").brand("marque3").typeId(3).price(647.56).imageURL("images/sm01.jpg").build());
-        mongoTemplate.save(ProductEntity.builder().id("4").name("test4").brand("marque3").typeId(1).price(620.56).imageURL("images/sm01.jpg").build());
-        mongoTemplate.save(ProductEntity.builder().id("5").name("test3").brand("marque4").typeId(1).price(677.56).imageURL("images/sm01.jpg").build());
+        mongoTemplate.save(ProductEntity.builder().id("1").name("test1").brand("marque1").typeId("1").price(650.50).imageURL("images/sm01.jpg").build());
+        mongoTemplate.save(ProductEntity.builder().id("2").name("test2").brand("marque2").typeId("2").price(570.72).imageURL("images/sm01.jpg").build());
+        mongoTemplate.save(ProductEntity.builder().id("3").name("test3").brand("marque3").typeId("3").price(647.56).imageURL("images/sm01.jpg").build());
+        mongoTemplate.save(ProductEntity.builder().id("4").name("test4").brand("marque3").typeId("1").price(620.56).imageURL("images/sm01.jpg").build());
+        mongoTemplate.save(ProductEntity.builder().id("5").name("test3").brand("marque4").typeId("1").price(677.56).imageURL("images/sm01.jpg").build());
     }
     @After
     public void tearDown() throws Exception {
@@ -50,37 +50,37 @@ public class ProductRepositoryMongo {
 
     @Test
     public void should_find_by_type(){
-        ProductEntity product = ProductEntity.builder().id("2").name("test2").brand("marque2").typeId(2).price(570.72).imageURL("images/sm01.jpg").build();
-        List<ProductEntity> result = repository.findByOptionalParameters(null, null, 2);
+        ProductEntity product = ProductEntity.builder().id("2").name("test2").brand("marque2").typeId("2").price(570.72).imageURL("images/sm01.jpg").build();
+        List<ProductEntity> result = repository.findByOptionalParameters(null, null, "2");
         assertThat(result).hasSize(1);
         assertThat(result.contains(product));
     }
     @Test
     public void should_find_by_type_and_name(){
-        ProductEntity product = ProductEntity.builder().id("5").name("test3").brand("marque4").typeId(1).price(677.56).imageURL("images/sm01.jpg").build();
-        List<ProductEntity> result = repository.findByOptionalParameters("test3", null, 1);
+        ProductEntity product = ProductEntity.builder().id("5").name("test3").brand("marque4").typeId("1").price(677.56).imageURL("images/sm01.jpg").build();
+        List<ProductEntity> result = repository.findByOptionalParameters("test3", null, "1");
         assertThat(result).hasSize(1);
         assertThat(result.contains(product));
     }
 
     @Test
     public void should_find_by_name(){
-        ProductEntity product = ProductEntity.builder().id("4").name("test4").brand("marque3").typeId(1).price(620.56).imageURL("images/sm01.jpg").build();
+        ProductEntity product = ProductEntity.builder().id("4").name("test4").brand("marque3").typeId("1").price(620.56).imageURL("images/sm01.jpg").build();
         List<ProductEntity> result = repository.findByOptionalParameters("test4", null, null);
         assertThat(result).hasSize(1);
         assertThat(result.contains(product));
     }
     @Test
     public void should_find_by_brand_and_name(){
-        ProductEntity product =ProductEntity.builder().id("3").name("test3").brand("marque3").typeId(3).price(647.56).imageURL("images/sm01.jpg").build();
+        ProductEntity product =ProductEntity.builder().id("3").name("test3").brand("marque3").typeId("3").price(647.56).imageURL("images/sm01.jpg").build();
         List<ProductEntity> result = repository.findByOptionalParameters("test3", "marque3", null);
         assertThat(result).hasSize(1);
         assertThat(result.contains(product));
     }
     @Test
     public void should_find_by_brand(){
-        ProductEntity product =ProductEntity.builder().id("3").name("test3").brand("marque3").typeId(3).price(647.56).imageURL("images/sm01.jpg").build();
-        ProductEntity product2 =ProductEntity.builder().id("4").name("test4").brand("marque3").typeId(1).price(620.56).imageURL("images/sm01.jpg").build();
+        ProductEntity product =ProductEntity.builder().id("3").name("test3").brand("marque3").typeId("3").price(647.56).imageURL("images/sm01.jpg").build();
+        ProductEntity product2 =ProductEntity.builder().id("4").name("test4").brand("marque3").typeId("1").price(620.56).imageURL("images/sm01.jpg").build();
         List<ProductEntity> result = repository.findByOptionalParameters(null, "marque3", null);
         assertThat(result).hasSize(2);
         assertThat(result.contains(product));
@@ -88,15 +88,15 @@ public class ProductRepositoryMongo {
     }
     @Test
     public void should_find_by_brand_and_type(){
-        ProductEntity product = ProductEntity.builder().id("1").name("test1").brand("marque1").typeId(1).price(650.50).imageURL("images/sm01.jpg").build();
-        List<ProductEntity> result = repository.findByOptionalParameters(null, "marque1", 1);
+        ProductEntity product = ProductEntity.builder().id("1").name("test1").brand("marque1").typeId("1").price(650.50).imageURL("images/sm01.jpg").build();
+        List<ProductEntity> result = repository.findByOptionalParameters(null, "marque1", "1");
         assertThat(result).hasSize(1);
         assertThat(result.contains(product));
     }
     @Test
     public void should_find_by_brand_and_type_and_name(){
-        ProductEntity product = ProductEntity.builder().id("5").name("test3").brand("marque4").typeId(1).price(677.56).imageURL("images/sm01.jpg").build();
-        List<ProductEntity> result = repository.findByOptionalParameters("test3", "marque4", 1);
+        ProductEntity product = ProductEntity.builder().id("5").name("test3").brand("marque4").typeId("1").price(677.56).imageURL("images/sm01.jpg").build();
+        List<ProductEntity> result = repository.findByOptionalParameters("test3", "marque4", "1");
         assertThat(result).hasSize(1);
         assertThat(result.contains(product));
     }
