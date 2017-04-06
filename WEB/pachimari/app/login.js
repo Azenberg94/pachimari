@@ -4,27 +4,28 @@ module.exports = function(app, models){
 	var passwordHash = require('password-hash');
     var msgError="";
     var bcrypt = require('bcrypt-nodejs');
-	var request = require('request');
-	
+	var rp = require('request-promise')
 	
 	// =====================================
 	// LOGIN ===============================
 	// =====================================
 	// show the login form
 	app.get('/login', function(req, res) {
-		res.render('login.ejs', { msgError: "" });
+		res.render('login.ejs', { msgError: "", session : req.session });
 	});
 
 	// process the login form
 	app.post('/login', function (req, res, next) {
-        
+        msgError="";
 		if(!req.body.username){
-             msgError = "Veuillez saisir votre identifiant ! "  
+            msgError = "Veuillez saisir votre identifiant ! "  
+			res.render('login.ejs', {msgError:msgError, session : req.session});
         }else if(!req.body.password){
-             msgError = "Veuillez saisir votre mot de passe ! "  
+            msgError = "Veuillez saisir votre mot de passe ! " 
+			res.render('login.ejs', {msgError:msgError, session : req.session});			
         }else{
 			
-			request({
+			rp({
 				url: "http://"+api.host+"/auth/" ,
 				method: "POST",
 				headers:{ 
@@ -32,25 +33,33 @@ module.exports = function(app, models){
 				},
 				json:{ 
 				  "login": req.body.username,
-				  "pwd": bcrypt.hashSync(req.body.password, null, null)
+				  "pwd": req.body.password
 
 				}
-				,function (error, response, body) { 
-					if(!error && response.statusCode == 200) {
+			}).then(function(body){
+				rp("http://"+api.host+"/user/"+req.body.username).then(function(body){
+					if(body){
+						var myJsonObject = JSON.parse(body);
 						
-					} else {
-						msgError = "Erreur combinaison identifiant/mot de passe !"
+						req.session.cookie.maxAge = 1000 * 60 * 3;
+						req.session.login = req.body.username;
+						req.session.admin = myJsonObject.type;
+						res.redirect('/');	
+					}else{
+						msgError = "Erreur combinaison login/mot de passe !"
+						res.render('login.ejs', {msgError:msgError, session : req.session});	
 					}
-				}
-			})
-		}
-	   
-	   if(msgError==""){
-		   res.redirect('/');
-	   }else{
-		   res.render('login.ejs', { msgError: "" });
-	   }
+				}).catch(function (err) {
+					msgError = "Erreur combinaion Identifiant/mot de passe ! Merci de réessayer." 
+					res.render('login.ejs', {msgError:msgError, session : req.session});			
+				})
+			}).catch(function (err) {
+				msgError = "Erreur lors de la connexion ! Merci de réessayer. !"
+				res.render('login.ejs', {msgError:msgError, session : req.session});	
+			});
+				
 			
+		}	
     });
 	
 	

@@ -24,13 +24,13 @@ public class ProductDto {
     @NotNull
     private String brand;
     @NotNull
-    private Integer typeId;
+    private String typeId;
     @NotNull
     private double price;
     @NotNull
     private String imageURL;
 
-    public ProductDto(String name, String brand, Integer typeId, double price, String imageURL){
+    public ProductDto(String name, String brand, String typeId, double price, String imageURL){
         this.name = name;
         this.brand = brand;
         this.typeId = typeId;

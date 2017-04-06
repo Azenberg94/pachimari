@@ -26,10 +26,19 @@ public class User {
 
     private String name;
 
+    private String lastName;
+
     private String email;
 
     private String login;
 
+    private String addresse;
+
+    private String cp;
+
+    private String ville;
+
     private String type;
 
 }
+

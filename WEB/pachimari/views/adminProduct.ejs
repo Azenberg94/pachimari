@@ -19,6 +19,9 @@
 	    <% if (msgError.length > 0) { %>
 	        <div class="alert alert-danger"> <%= msgError %> </div>
 	    <% } %>
+		<% if (msgValidation.length > 0) { %>
+	        <div class="alert alert-Success"> <%= msgValidation %> </div>
+	    <% } %>
 		<div class="form-group">
 			<label>Nom</label>
 			<input type="text" class="form-control" name="name" required>

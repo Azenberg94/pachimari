@@ -19,58 +19,48 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
-
     @Autowired
-    private ProductsRepository productRepository;
-    @Autowired
-    List<ProductDto> productDTOS;
+    private ProductServiceImpl productService;
 
     @GetMapping("/find/{name}/{brand}/{type}")
-    public List<ProductDto> getProductByOptionalParameters(@PathVariable("name") String name, @PathVariable("brand") String brand, @PathVariable("type") Integer type) {
+    public List<ProductDto> getProductByOptionalParameters(@PathVariable("name") String name, @PathVariable("brand") String brand, @PathVariable("type") String type) {
         name = (name.equals("any")) ? null : name;
         brand = (brand.equals("any")) ? null : brand;
-        type = (type == 0) ? null : type;
-        productDTOS.clear();
-        List<ProductEntity> productEntities = productRepository.findByOptionalParameters(name, brand, type);
-        for(ProductEntity product: productEntities){
-            productDTOS.add(ProductAdapter.fromProductToDto(product));
-        }
-        return productDTOS;
+        type = (type.equals("any")) ? null : type;
+        return productService.getSelectedProducts(name, brand, type);
     }
 
     @GetMapping
     public List<ProductDto> getAllProducts() {
-        productDTOS.clear();
-        List<ProductEntity> productEntities = productRepository.findAll();
-        for(ProductEntity product: productEntities){
-            productDTOS.add(ProductAdapter.fromProductToDto(product));
-        }
-        return productDTOS;
+        return productService.getAllProducts();
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseEntity createAccount(@RequestBody @Valid ProductDto productDto, BindingResult bindingResult){
+    public ResponseEntity createProduct(@RequestBody @Valid ProductDto productDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new InvalidException();
         }
-        productRepository.save(ProductAdapter.fromDtoToProduct(productDto));
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{product_id}")
-                .buildAndExpand(productDto).toUri();
+                .buildAndExpand(productService.createProduct(productDto)).toUri();
         return ResponseEntity.created(location).body(productDto);
     }
-
-    @DeleteMapping()
-    public ResponseEntity deleteProduct(@RequestBody  String id){
-        ProductEntity productToDelete = productRepository.findById(id);
-        productRepository.delete(productToDelete);
-        return new ResponseEntity(ProductAdapter.fromProductToDto(productToDelete),HttpStatus.OK);
+    @GetMapping("/{product_id}")
+    public ProductDto getProductById(@PathVariable("product_id") String id){
+        return productService.getProductById(id);
     }
-
-
+    @DeleteMapping()
+    public ResponseEntity deleteProduct(@RequestBody  String id, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new InvalidException();
+        }
+        return new ResponseEntity(productService.deleteProduct(id),HttpStatus.OK);
+    }
     @PutMapping()
-    public ResponseEntity updateProduct(@RequestBody @Valid ProductDto productDto,  BindingResult bindingResult){
-        productRepository.save(ProductAdapter.fromDtoToProduct(productDto));
-        return new ResponseEntity(productDto,HttpStatus.OK);
+    public ResponseEntity updateProduct(@RequestBody @Valid ProductDto productDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new InvalidException();
+        }
+        return new ResponseEntity(productService.updateProduct(productDto),HttpStatus.OK);
     }
 }

@@ -1,20 +1,21 @@
 module.exports = function(app, models){
 
     var msgError="";
+	var msgValidation = "";
 	var rp = require('request-promise');
 	var request = require('request');
 	var api = models.myApi; 
 	
 
-	
 				
 	// =====================================
-	// addProduct ==============================
+	// adminProduct ==============================
 	// =====================================
-	// show the addproduct form
-	app.get('/addProduct', function(req, res, next) {
+	// show the adminProduct form
+	app.get('/adminProduct', function(req, res, next) {
+		msgError="";
 		rp("http://"+api.host+"/product/" ).then(function(body){
-			res.render('addProduct.ejs', {msgError:"", listProduct :  JSON.parse(body)});
+			res.render('adminProduct.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
 		});
 			
 	});
@@ -22,19 +23,23 @@ module.exports = function(app, models){
 
 
 	// process the signup form
-	app.post('/addProduct', function (req, res, next) {
-		
+	app.post('/adminProduct', function (req, res, next) {
+		msgError="";
         if (!req.body.name){
             msgError = "Veuillez saisir un nom !"
+			 res.redirect('/adminProduct');
         }else if (!req.body.brand){
             msgError = "Veuillez saisir une marque !"
+			 res.redirect('/adminProduct');
         }else if(!req.body.typeId){
             msgError = "Veuillez choisir un type !"
+			 res.redirect('/adminProduct');
 		}else if(!req.body.price){
             msgError = "Veuillez saisir un prix ! "
+			res.redirect('/adminProduct');
         }else{
 			
-				request({
+				rp({
 					url: "http://"+api.host+"/product/" ,
 					method: "POST",
 					headers:{ 
@@ -46,15 +51,16 @@ module.exports = function(app, models){
 					  "typeId": req.body.typeId,
 					  "price": req.body.price,
 					  "imageURL": req.body.imageURL
-						}
-					,function (error, response, body) { 
-						if(!error && response.statusCode == 200) {
-							msgError = "Produit Ajouté"
-						} else {
-							msgError = "Erreur lors de l'ajout. Merci de réessayer."
-						}
 					}
-				})
+					
+					
+				}).then(function(body){
+					msgValidation = "Produit ajouté ! Merci de réessayer. !"
+					res.render('adminProduct.ejs', {msgError:msgError, msgValidation : msgValidation,session : req.session});	
+				}).catch(function (err) {
+					msgError = "Erreur lors de la création du produit ! Merci de réessayer. !"
+					res.render('adminProduct.ejs', {msgError:msgError, msgValidation : msgValidation, session : req.session});	
+				});
 			/*
 			
 			request.get(
@@ -73,7 +79,7 @@ module.exports = function(app, models){
         }
 		
         
-        res.redirect('/addProduct');
+       
         
 
 	});

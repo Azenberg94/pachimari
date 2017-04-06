@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class ProductEntity {
-
     @Id
     private String id;
 
@@ -22,7 +21,7 @@ public class ProductEntity {
 
     private String brand;
 
-    private Integer typeId;
+    private String typeId;
 
     private double price;
 
@@ -31,7 +30,7 @@ public class ProductEntity {
     @Override
     public String toString() {
         return String.format(
-                "Product[id=%s, name='%s', brand='%s', typeId='%d', price='%f%n', imageURL='%s']",
+                "Product[id=%s, name='%s', brand='%s', typeId='%s', price='%f%n', imageURL='%s']",
                 id, name, brand, typeId, price, imageURL);
     }
 
