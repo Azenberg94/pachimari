@@ -3,7 +3,7 @@ module.exports = function(app, models){
 	var api = models.myApi; 
     var msgError="";
 	var rp = require('request-promise')
-	
+	var bcrypt = require('bcrypt-nodejs');
 	// =====================================
 	// LOGIN ===============================
 	// =====================================
@@ -34,16 +34,14 @@ module.exports = function(app, models){
 				rp({
 					url: "http://"+api.host+"/auth/" ,
 					method: "POST",
-					headers:{ 
-						'Content-Type': 'application/json'
-					},
-					json:{ 
-					  "login": req.body.username,
-					  "pwd" : req.body.password 
-					}
+					body: [req.body.username]
 				}).then(function(body){
-					if(body==1){
-						rp("http://"+api.host+"/user/"+req.body.username).then(function(body){
+					if(body){
+						console.log(body);
+						var jsonBody =  JSON.parse(body);
+						
+						if(jsonBody.login == req.body.username && bcrypt.compareSync(req.body.password, jsonBody.pwd)){
+							rp("http://"+api.host+"/user/"+req.body.username).then(function(body){
 							if(body){
 								var myJsonObject = JSON.parse(body);
 								req.session.cookie.maxAge = 1000 * 60 * 60;
@@ -54,6 +52,10 @@ module.exports = function(app, models){
 								msgError = "Erreur combinaion Identifiant/mot de passe ! Merci de réessayer." 
 							}
 						})
+						}else{
+							msgError = "Erreur combinaion Identifiant/mot de passe ! Merci de réessayer." 
+						}
+						
 					}else{
 						msgError = "Erreur combinaion Identifiant/mot de passe ! Merci de réessayer." 
 					}

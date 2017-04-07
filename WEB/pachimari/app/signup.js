@@ -3,7 +3,7 @@ module.exports = function(app, models){
     var msgError="";
 	var rp = require('request-promise')
 	var request = require('request');
-	
+	var bcrypt = require('bcrypt-nodejs');
 	
 	var api = models.myApi; 
  
@@ -37,7 +37,7 @@ module.exports = function(app, models){
             msgError = "Les mots de passe saisient ne sont pas identiques !"
 			res.render('signup.ejs', {msgError:msgError, session : req.session});
 			
-        }else if(!req.body.firstName){
+        }else if(!req.body.lastName){
             msgError = "Veuillez saisir votre nom ! "
 			res.render('signup.ejs', {msgError:msgError, session : req.session});
 			
@@ -77,8 +77,8 @@ module.exports = function(app, models){
 							'Content-Type': 'application/json'
 						},
 						json:{ 
-						  "lastName": req.body.name,
-						  "name":req.body.firstName,
+						  "lastName": req.body.lastName,
+						  "name":req.body.name,
 						  "login": req.body.username,
 						  "email": req.body.mail,
 						  "addresse" : req.body.adresse,
@@ -102,7 +102,7 @@ module.exports = function(app, models){
 						},
 						json:{ 
 						  "login": req.body.username,
-						  "pwd": req.body.password
+						  "pwd": bcrypt.hashSync(req.body.password, null, null),
 						}
 					}).then(function(body){
 						//console.log("Body 2 : " + body)

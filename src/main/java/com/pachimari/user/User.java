@@ -1,11 +1,12 @@
 package com.pachimari.user;
 
 import lombok.*;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
+import javax.persistence.Id;
 
 
 /**
@@ -41,4 +42,3 @@ public class User {
     private String type;
 
 }
-

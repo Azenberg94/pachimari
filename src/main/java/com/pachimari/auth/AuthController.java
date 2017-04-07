@@ -28,17 +28,16 @@ public class AuthController {
     private AuthRepository authRepository;
 
     @PostMapping
-    public Integer authentification(@RequestBody @Valid AuthDto authDto, BindingResult bindingResult ){
+    public AuthEntity authentification(@RequestBody String login, BindingResult bindingResult ){
         if(bindingResult.hasErrors()){
             throw new InvalideException();
         }
-        int r = 0;
 
-        AuthEntity authEntity = authRepository.findByLoginAndPwd(authDto.getLogin(), authDto.getPwd());
+        AuthEntity authEntity = authRepository.findByLogin(login);
         if(authEntity!=null){
-            r = 1;
+            return authEntity;
         }
-        return r;
+        return null;
     }
 
     @PostMapping("/add")
@@ -59,6 +58,15 @@ public class AuthController {
     public ResponseEntity updateProduct(@RequestBody @Valid AuthDto authDto, BindingResult bindingResult){
         authRepository.save(AuthAdapter.toAuthEntity(authDto));
         return new ResponseEntity(authDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping()
+    public int deleteProduct(@RequestBody String login, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new InvalidException();
+        }
+       // authRepository.deleteByLogin(id);
+        return 1;
     }
 
 }
