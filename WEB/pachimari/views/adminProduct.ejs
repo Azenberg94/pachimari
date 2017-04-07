@@ -15,7 +15,7 @@
 	<h1><span class="fa fa-sign-in"></span> Ajouter un produit</h1>
 
 	<!-- addProduct FORM -->
-	<form action="/adminProduct" method="post">
+	<form action="/adminProduct" method="post" enctype='multipart/form-data'>
 	    <% if (msgError.length > 0) { %>
 	        <div class="alert alert-danger"> <%= msgError %> </div>
 	    <% } %>
@@ -40,7 +40,7 @@
         </div>
         <div class="form-group">
             <label>Image URL</label>
-            <input type="text" class="form-control" name="imageURL" required>
+            <input type="file" class="form-control" name="imageURL" required>
         </div>
 		
 

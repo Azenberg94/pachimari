@@ -1,12 +1,20 @@
 module.exports = function(app, models){
 
+
     var msgError="";
 	var msgValidation = "";
 	var rp = require('request-promise');
 	var request = require('request');
-	var api = models.myApi; 
-	
-
+	var api = models.myApi;
+    var multer = require("multer");
+    var storage = multer.diskStorage({
+        destination: function (req, file, callback) {
+            callback(null, './app/image/');
+        },
+        filename: function (req, file, callback) {
+            callback(null, file.fieldname + '-' + file.originalname);
+        }
+    });
 				
 	// =====================================
 	// adminProduct ==============================
@@ -40,10 +48,10 @@ module.exports = function(app, models){
 
 
 	// process the signup form
-	app.post('/adminProduct', function (req, res, next) {
+	app.post('/adminProduct', multer({storage: storage}).single('imageURL'),function (req, res, next) {
 		msgError="";
 		msgValidation="";
-		
+		console.log(req.body)
 		// if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			// res.redirect("/");
 		// }else{
