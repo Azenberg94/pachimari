@@ -15,3 +15,4 @@ public interface AuthRepository extends MongoRepository<AuthEntity, String> {
     AuthEntity deleteByLogin(String login);
    // AuthEntity updateProduct(ProductDto productDto);
 }
+.
