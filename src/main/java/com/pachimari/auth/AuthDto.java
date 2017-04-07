@@ -1,6 +1,7 @@
 package com.pachimari.auth;
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 
@@ -12,9 +13,10 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
 public class AuthDto {
 
-    private Long id;
+    private String id;
     @NotNull
     private String login;
     @NotNull
@@ -22,7 +24,6 @@ public class AuthDto {
 
     public AuthDto(String login, String pwd){
         this.login=login;
-        this.pwd=pwd;
     }
 
 }
