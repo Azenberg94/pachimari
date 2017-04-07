@@ -74,7 +74,6 @@ public class UserControllerIT {
         given().log().all().contentType(JSON).body(userDTO).when()
                 .post("/user")
                 .then()
-
                 .statusCode(201)
                 .body("name",is("fifth")).log().all();
 

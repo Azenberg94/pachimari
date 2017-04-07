@@ -24,12 +24,12 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
  * Created by iPlowPlow on 10/03/2017.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AuthRepositoryJdbc.class)
+//@SpringBootTest(classes = AuthRepositoryJdbc.class)
 @DataJpaTest
-@AuthData
+
 public class AuthRepositoryJdbcIt {
 
-    @Autowired
+   /* @Autowired
     AuthRepositoryJdbc authRepositoryJdbc;
 
     @Test
@@ -67,5 +67,5 @@ public class AuthRepositoryJdbcIt {
         authRepositoryJdbc.addAuth(login, pwd);
 
     }
-
+*/
 }

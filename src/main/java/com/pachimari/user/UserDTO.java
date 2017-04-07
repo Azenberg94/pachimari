@@ -3,6 +3,7 @@ package com.pachimari.user;
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 

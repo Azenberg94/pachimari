@@ -13,3 +13,4 @@ public interface AuthRepository extends MongoRepository<AuthEntity, String> {
     AuthEntity findByLoginAndPwd(String login, String pwd);
     AuthEntity findByLogin(String login);
 }
+.

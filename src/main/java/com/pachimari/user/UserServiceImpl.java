@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createAccount(UserDTO userDTO) {
-        User user=User.builder().id(userDTO.getId()).email(userDTO.getEmail()).login(userDTO.getLogin()).name(userDTO.getName()).type(userDTO.getType()).build();
+        User user=User.builder().id(userDTO.getId()).email(userDTO.getEmail()).login(userDTO.getLogin()).name(userDTO.getName()).type(userDTO.getType()).lastName(userDTO.getLastName()).cp(userDTO.getCp()).addresse(userDTO.getAddresse()).ville(userDTO.getVille()).build();
         userRepository.insert(user);
         return userDTO;
     }
