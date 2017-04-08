@@ -1,6 +1,7 @@
 module.exports = function(app, models){
 
-
+    var gid = require('guid');
+	var idImage=gid.create();
     var msgError="";
 	var msgValidation = "";
 	var rp = require('request-promise');
@@ -12,7 +13,8 @@ module.exports = function(app, models){
             callback(null, './app/image/');
         },
         filename: function (req, file, callback) {
-            callback(null, file.fieldname + '-' + file.originalname);
+        	var extention=file.originalname.split(".");
+            callback(null, file.fieldname + '-' + idImage+'.'+extention[extention.length-1]);
         }
     });
 				
@@ -51,7 +53,7 @@ module.exports = function(app, models){
 	app.post('/adminProduct', multer({storage: storage}).single('imageURL'),function (req, res, next) {
 		msgError="";
 		msgValidation="";
-		console.log(req.body)
+		console.log(req.file)
 		// if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			// res.redirect("/");
 		// }else{
@@ -87,7 +89,7 @@ module.exports = function(app, models){
 							  "brand": req.body.brand,
 							  "typeId": req.body.typeId,
 							  "price": req.body.price,
-							  "imageURL": req.body.imageURL
+							  "imageURL": req.file.filename
 							}	
 						}).then(function(body){
 							//console.log("Body 2 : " + body)
@@ -119,7 +121,7 @@ module.exports = function(app, models){
 	});
 	
 	// process the signup form
-	app.post('/adminProduct/update', function (req, res, next) {
+	app.post('/adminProduct/update',multer({storage: storage}).single('imageURL'), function (req, res, next) {
 		msgError="";
 		msgValidation="";
 		
@@ -164,7 +166,7 @@ module.exports = function(app, models){
 								  "brand": req.body.brand,
 								  "typeId": req.body.typeId,
 								  "price": req.body.price,
-								  "imageURL": req.body.imageURL
+								  "imageURL": req.file.filename
 								}	
 							}).then(function(body){
 								//console.log("Body 2 : " + body)

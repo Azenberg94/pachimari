@@ -6,21 +6,16 @@ import com.pachimari.PachimariApplication;
 import com.pachimari.user.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import org.springframework.data.mongodb.core.MongoTemplate;
-
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
-
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -101,10 +96,9 @@ public class UserControllerIT {
     public void should_fail_get_list_user(){
 
         given().log().all().when()
-                .get("/user")
+                .get("/users")
                 .then()
-                .statusCode(200)
-                .body("$",hasSize(3)).log().all();
+                .statusCode(404).log().all();
     }
 
 
