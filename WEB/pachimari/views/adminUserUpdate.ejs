@@ -1,0 +1,80 @@
+<!-- views/signup.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Administration Produit</title>
+	<% include ./partials/header %>
+</head>
+<body>
+<% include ./partials/navbar %>
+<div class="container">
+
+
+<div class="col-sm-8 col-sm-offset-1">
+
+	<h1><span class="fa fa-sign-in"></span> Modifier l'utilisateur <%= listUser.login %></h1>
+
+	<!-- addProduct FORM -->
+	<form action="/adminUser/update" method="post">
+	    <% if (msgError.length > 0) { %>
+	        <div class="alert alert-danger"> <%= msgError %> </div>
+	    <% } %>
+		<% if (msgValidation.length > 0) { %>
+	        <div class="alert alert-success"> <%= msgValidation %> </div>
+	    <% } %>
+	<div class="form-group">
+			<label>Login</label>
+			<input type="text" class="form-control" name="username" value ="listUser.login"  required>
+		</div>
+		<div class="form-group">
+			<label>Mot de passe</label>
+			<input type="password" class="form-control" name="password"  required>
+		</div>
+        <div class="form-group">
+            <label>Confirmer le mot de passe</label>
+        	<input type="password" class="form-control" name="passwordConfirm" required>
+        </div>
+        <div class="form-group">
+            <label>Nom</label>
+            <input type="text" class="form-control" name="lastName" value ="listUser.lastName" required>
+        </div>
+        <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" class="form-control" name="name" value ="listUser.name"  required>
+        </div>
+        <div class="form-group">
+            <label>Mail</label>
+            <input type="text" class="form-control" name="mail" value ="listUser.mail"  required>
+        </div>
+		<div class="form-group">
+            <label>Adresse</label>
+            <input type="text" class="form-control" name="adresse"  value ="listUser.addresse" required>
+        </div>
+		<div class="form-group">
+            <label>CP</label>
+            <input type="number" class="form-control" name="cp" value ="listUser.cp" required>
+        </div>
+		<div class="form-group">
+            <label>Ville</label>
+            <input type="text" class="form-control" name="ville" value ="listUser.ville" required>
+        </div>
+		
+		 <input type="hidden" name="nameOld" value="<%= listUser.login %>">
+		 <input type="hidden" name="brandOld" value="<%= listUser.lastName %>">
+		 <input type="hidden" name="typeIdOld" value="<%= listUser.name %>">
+		 <input type="hidden" name="priceOld" value="<%= listUser.mail %>">
+		 <input type="hidden" name="imageURLOld" value="<%= listUser.addresse %>">
+		 <input type="hidden" name="imageURLOld" value="<%= listUser.cp %>">
+		 <input type="hidden" name="imageURLOld" value="<%= listUser.ville %>">
+		 <input type="hidden" name="id" value="<%= listUser.id %>">	
+
+		<button type="submit" class="btn btn-warning btn-lg">Valider</button>
+	</form>	
+</div>
+
+
+
+</div><br><br>
+	<% include ./partials/footer %>
+</body>
+</html>

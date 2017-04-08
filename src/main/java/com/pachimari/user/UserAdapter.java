@@ -16,6 +16,10 @@ public  class UserAdapter {
                 .email(userDTO.getEmail())
                 .name(userDTO.getName())
                 .type(userDTO.getType())
+                .lastName(userDTO.getLastName())
+                .addresse(userDTO.getAddresse())
+                .cp(userDTO.getCp())
+                .ville(userDTO.getVille())
                 .build();
     }
 
@@ -26,6 +30,10 @@ public  class UserAdapter {
                 .email(userEntity.getEmail())
                 .name(userEntity.getName())
                 .type(userEntity.getType())
+                .lastName(userEntity.getLastName())
+                .addresse(userEntity.getAddresse())
+                .cp(userEntity.getCp())
+                .ville(userEntity.getVille())
                 .build();
     }
     public static List<UserDTO> listToUserDTO(List<User> list){

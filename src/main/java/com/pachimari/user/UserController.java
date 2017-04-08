@@ -7,9 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Pierre on 02/03/2017.
@@ -26,10 +24,10 @@ public class UserController {
 
         return userService.getList();
     }
-    @GetMapping("/login/{login}")
+
+    @GetMapping("/{login}")
     public ResponseEntity getUserByLogin(@PathVariable("login") String login)
     {
-
         return new ResponseEntity(userService.getUserByLogin(login),HttpStatus.OK);
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -49,6 +47,7 @@ public class UserController {
     public ResponseEntity deleteAccount(@RequestBody  String id){
         return new ResponseEntity(userService.deleteAccount(id),HttpStatus.OK);
     }
+
     @PutMapping()
     public ResponseEntity updateAccount(@RequestBody @Valid UserDTO userDTO,  BindingResult bindingResult){
         return new ResponseEntity(userService.updateAccount(userDTO),HttpStatus.OK);
