@@ -39,10 +39,12 @@ public class UserControllerIT {
     UserRepository repository;
     @Before
     public void init(){
+
         mongoTemplate.dropCollection(User.class);
         mongoTemplate.save(User.builder().id("0").email("test@test.fr").name("test").lastName("lasttest").login("test1").addresse("36 rue houdart").ville("roissy").cp("95700").type("admin").build());
         mongoTemplate.save(User.builder().id("1").email("test2@test.fr").name("test2").login("test2").addresse("36 rue houdart").ville("roissy").cp("95700").type("user").build());
         RestAssured.port=localServerPort;
+
     }
     @After
     public void tearDown() throws Exception {
@@ -51,13 +53,17 @@ public class UserControllerIT {
 
     @Test
     public void should_update_user(){
+
         UserDTO userDTO= UserDTO.builder().id("0").email("test@test.fr").name("test3").login("test2").build();
+
         given().log().all().contentType(JSON).body(userDTO).when()
                 .put("/user")
                 .then()
                 .statusCode(200)
+
                 .body("id",is("0"))
                 .body("name",is("test3")).log().all();
+
     }
 
     @Test
@@ -70,6 +76,7 @@ public class UserControllerIT {
                 .then()
                 .statusCode(201)
                 .body("name",is("fifth")).log().all();
+
     }
 
     @Test

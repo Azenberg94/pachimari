@@ -6,14 +6,12 @@ import cz.jirutka.spring.embedmongo.EmbeddedMongoBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
-
-
 @Configuration
-public class MongoConfigTest extends  AbstractMongoConfiguration {
+public class MongoConfigTest extends AbstractMongoConfiguration {
 
     @Override
     public String getDatabaseName() {
-        return "pachimari-test";
+        return "pachimariTest";
     }
 
     @Override
@@ -26,3 +24,6 @@ public class MongoConfigTest extends  AbstractMongoConfiguration {
     }
 
 }
+
+
+
