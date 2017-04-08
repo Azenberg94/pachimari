@@ -25,17 +25,17 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class AuthController {
 
     @Autowired
-    private AuthRepository authRepository;
+    private AuthServiceImpl authService;
 
     @PostMapping
-    public AuthEntity authentification(@RequestBody String login, BindingResult bindingResult ){
+    public AuthDto authentification(@RequestBody String login, BindingResult bindingResult ){
         if(bindingResult.hasErrors()){
             throw new InvalideException();
         }
 
-        AuthEntity authEntity = authRepository.findByLogin(login);
-        if(authEntity!=null){
-            return authEntity;
+        AuthDto authDto = authService.getAuthByLogin(login);
+        if(authDto!=null){
+            return authDto;
         }
         return null;
     }
@@ -47,7 +47,7 @@ public class AuthController {
         if(bindingResult.hasErrors()){
             throw new InvalidException();
         }
-        authRepository.save(AuthAdapter.toAuthEntity(authDto));
+        authService.createAuth(authDto);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{auth_id}")
                 .buildAndExpand(authDto).toUri();
         return ResponseEntity.created(location).body(authDto);
@@ -56,17 +56,13 @@ public class AuthController {
 
     @PutMapping()
     public ResponseEntity updateProduct(@RequestBody @Valid AuthDto authDto, BindingResult bindingResult){
-        authRepository.save(AuthAdapter.toAuthEntity(authDto));
+        authService.updateAuth(authDto);
         return new ResponseEntity(authDto, HttpStatus.OK);
     }
 
     @DeleteMapping()
-    public int deleteProduct(@RequestBody String login, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            throw new InvalidException();
-        }
-       // authRepository.deleteByLogin(id);
-        return 1;
+    public ResponseEntity deleteProduct(@RequestBody String login, BindingResult bindingResult){
+        return new ResponseEntity(authService.deleteAuth(login),HttpStatus.OK);
     }
 
 }

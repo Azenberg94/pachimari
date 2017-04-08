@@ -9,9 +9,9 @@ module.exports = function(app, models){
 
 				
 	// =====================================
-	// adminProduct ==============================
+	// adminUser ==============================
 	// =====================================
-	// show the adminProduct form
+	// show the adminUser form
 	app.get('/adminUser', function(req, res, next) {
 		msgError="";
 		msgValidation="";
@@ -153,7 +153,7 @@ module.exports = function(app, models){
 	});
 	
 	// process the signup form
-	app.post('/adminProduct/update', function (req, res, next) {
+	app.post('/adminUser/update', function (req, res, next) {
 		msgError="";
 		msgValidation="";
 		
@@ -164,19 +164,19 @@ module.exports = function(app, models){
 		// }else{
 			if (!req.body.name){
 				msgError = "Veuillez saisir un nom !"
-				 res.redirect('/adminProduct');
+				 res.redirect('/adminUser');
 			}else if (!req.body.brand){
 				msgError = "Veuillez saisir une marque !"
-				 res.redirect('/adminProduct');
+				 res.redirect('/adminUser');
 			}else if(!req.body.typeId){
 				msgError = "Veuillez choisir un type !"
-				 res.redirect('/adminProduct');
+				 res.redirect('/adminUser');
 			}else if(!req.body.price){
 				msgError = "Veuillez saisir un prix ! "
-				res.redirect('/adminProduct');
+				res.redirect('/adminUser');
 			}else{
 				if(req.body.name == req.body.nameOld && req.body.brand == req.body.brandOld && req.body.type == req.body.typeOld && req.body.price == req.body.priceOld && req.body.imageURL == req.body.imageURLOld ){
-					res.redirect("adminProduct/update/valide")
+					res.redirect("adminUser/update/valide")
 				}else{
 					rp("http://"+api.host+"/product/find/"+req.body.name+"/"+req.body.brand+"/"+req.body.typeId).then(function(body){
 						if(JSON.parse(body).length>0 && (req.body.name != req.body.nameOld || req.body.brand != req.body.brandOld || req.body.type == req.body.typeOld)){
@@ -205,7 +205,7 @@ module.exports = function(app, models){
 							}).catch(function (err) {
 								msgError = "Erreur lors de la création du produit ! Merci de réessayer. !"
 								rp("http://"+api.host+"/product/" ).then(function(body){
-									res.render('adminProductUpdate.ejs', {msgError:msgError, msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
+									res.render('adminUserUpdate.ejs', {msgError:msgError, msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
 								});
 								
 							});
@@ -215,10 +215,10 @@ module.exports = function(app, models){
 					}).then(function(body){
 						if(msgError==""){
 							msgValidation = "Produit ajouté !"
-							res.redirect("/adminProduct/update/valide");
+							res.redirect("/adminUser/update/valide");
 						}else{
 							rp("http://"+api.host+"/product/" ).then(function(body){
-								res.redirect('/adminProduct/update/error/'+req.body.id);
+								res.redirect('/adminUser/update/error/'+req.body.id);
 							});
 						}
 					});
@@ -228,69 +228,69 @@ module.exports = function(app, models){
 		// }
 	});
 
-	app.get('/adminProduct/update/valide', function(req, res, next) {
+	app.get('/adminUser/update/valide', function(req, res, next) {
 		msgError="";
 		msgValidation="";
 		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
 		}else{*/
 			rp("http://"+api.host+"/product/" ).then(function(body){
-				res.render('adminProduct.ejs', {msgError:"", msgValidation : "Modification enregistrée !", listProduct :  JSON.parse(body), session : req.session});
+				res.render('adminUser.ejs', {msgError:"", msgValidation : "Modification enregistrée !", listProduct :  JSON.parse(body), session : req.session});
 			});
 		//}
 			
 	});
 	
-	app.get('/adminProduct/update/:tagId', function(req, res, next) {
+	app.get('/adminUser/update/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation="";
 		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
 		}else{*/
 			rp("http://"+api.host+"/product/"+req.params.tagId ).then(function(body){
-				res.render('adminProductUpdate.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
+				res.render('adminUserUpdate.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
 			});
 		//}
 			
 	});
 	
-	app.get('/adminProduct/update/error/:tagId', function(req, res, next) {
+	app.get('/adminUser/update/error/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation="";
 		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
 		}else{*/
 			rp("http://"+api.host+"/product/"+req.params.tagId ).then(function(body){
-				res.render('adminProductUpdate.ejs', {msgError:"Ce nom de produit est déjà utilisé pour cette marque et ce type!", msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
+				res.render('adminUserUpdate.ejs', {msgError:"Ce nom de produit est déjà utilisé pour cette marque et ce type!", msgValidation : msgValidation, listUser :  JSON.parse(body), session : req.session});
 			});
 		//}
 			
 	});
 	
-	app.get('/adminUser/delete/:tagId:/:tagLogin', function(req, res, next) {
+	app.get('/adminUser/delete/:tagId/:tagLogin', function(req, res, next) {
 		msgError="";
 		msgValidation=""
 		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
 		}else{*/
 			rp({
-				url: "http://"+api.host+"/product/" ,
+				url: "http://"+api.host+"/user/" ,
 				method: "DELETE",
 				
 				body: [req.params.tagId]
 			}).then(
 			
 			rp({
-				url: "http://"+api.host+"/product/" ,
+				url: "http://"+api.host+"/auth/" ,
 				method: "DELETE",
 				
-				body: [req.params.tagId]
+				body: [req.params.tagLogin]
 			})).then(function(body){
 				res.redirect("/adminUser/delete/")
 			}).catch(function (err) {
 				msgError = "Erreur lors du Delete ! Merci de réessayer. !"
 				console.log("err : " +err)
-				rp("http://"+api.host+"/product/" ).then(function(body){
+				rp("http://"+api.host+"/user/" ).then(function(body){
 					res.render('adminUser.ejs', {msgError:msgError, msgValidation : msgValidation, listUser :  JSON.parse(body), session : req.session});
 				});
 				
@@ -305,8 +305,8 @@ module.exports = function(app, models){
 		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
 		}else{*/
-			rp("http://"+api.host+"/product/" ).then(function(body){
-				res.render('adminUser.ejs', {msgError:"", msgValidation : "Produit supprimé !", listUser :  JSON.parse(body), session : req.session});
+			rp("http://"+api.host+"/user/" ).then(function(body){
+				res.render('adminUser.ejs', {msgError:"", msgValidation : "User supprimé !", listUser :  JSON.parse(body), session : req.session});
 			});
 		//}
 			
