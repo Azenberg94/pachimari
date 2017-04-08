@@ -15,7 +15,7 @@
 	<h1><span class="fa fa-sign-in"></span> Modifier le produit <%= listProduct.name %></h1>
 
 	<!-- addProduct FORM -->
-	<form action="/adminProduct/update" method="post">
+	<form action="/adminProduct/update" method="post" enctype='multipart/form-data'>
 	    <% if (msgError.length > 0) { %>
 	        <div class="alert alert-danger"> <%= msgError %> </div>
 	    <% } %>
@@ -40,7 +40,8 @@
         </div>
         <div class="form-group">
             <label>Image URL</label>
-            <input type="text" class="form-control" name="imageURL" value="<%= listProduct.imageURL %>" required>
+            <input type="file" class="form-control" name="imageURL" value="<%= listProduct.imageURL %>" required>
+            <img src="../../<%= listProduct.imageURL %>">
         </div>
 		
 		<img src ="localhost:8080/app/image/imageURL-plow.png">

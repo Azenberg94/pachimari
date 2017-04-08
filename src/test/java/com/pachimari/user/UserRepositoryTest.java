@@ -1,31 +1,23 @@
 package com.pachimari.user;
 
 import com.jayway.restassured.RestAssured;
-import com.pachimari.MongoConfig;
-
 import com.pachimari.MongoConfigTest;
 import com.pachimari.PachimariApplication;
 import com.pachimari.user.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import org.springframework.data.mongodb.core.MongoTemplate;
-
 import org.springframework.test.context.junit4.SpringRunner;
 
-
-import static org.assertj.core.api.Java6Assertions.assertThat;
 import java.util.List;
 
-
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 /**
  * Created by Pierre on 02/03/2017.

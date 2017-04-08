@@ -26,7 +26,6 @@ public class UserController {
     }
 
     @GetMapping("/{login}")
-
     public ResponseEntity getUserByLogin(@PathVariable("login") String login)
     {
         return new ResponseEntity(userService.getUserByLogin(login),HttpStatus.OK);
