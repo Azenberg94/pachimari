@@ -1,7 +1,9 @@
 package com.pachimari.auth;
 
 import lombok.*;
-import javax.persistence.*;
+
+import javax.persistence.Id;
+
 /**
  * Created by iPlowPlow on 10/03/2017.
  */

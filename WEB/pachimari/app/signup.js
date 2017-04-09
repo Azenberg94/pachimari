@@ -62,7 +62,11 @@ module.exports = function(app, models){
 			 
         }else{
 			
-			rp("http://"+api.host+"/user/"+req.body.username).then(function(body){
+			rp({
+				url:"http://"+api.host+"/auth/", 
+				method : "POST",
+				body : [req.body.username]
+			}).then(function(body){
 				if(body){
 					msgError="Cet utilisateur existe déjà !";
 				}
