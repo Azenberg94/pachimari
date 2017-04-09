@@ -21,14 +21,12 @@ public class UserController {
     UserServiceImpl userService;
 
     @GetMapping()
-    public List<UserDTO> getAccountList()
-    {
-
+    public List<UserDTO> getAccountList() {
         return userService.getList();
     }
+
     @GetMapping("/login/{login}")
-    public ResponseEntity getUserByLogin(@PathVariable("login") String login)
-    {
+    public ResponseEntity getUserByLogin(@PathVariable("login") String login) {
 
         return new ResponseEntity(userService.getUserByLogin(login),HttpStatus.OK);
     }

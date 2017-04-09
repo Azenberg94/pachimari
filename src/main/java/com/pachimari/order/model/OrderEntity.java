@@ -3,7 +3,6 @@ package com.pachimari.order.model;
 import com.pachimari.item.model.Item;
 import com.pachimari.user.User;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.util.HashSet;
