@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title></title>
+    <% include ./partials/header %>
+</head>
+<body>
+
+<% include ./partials/navbar %>
+
+<div class="container">
+    <div class="row>">
+
+        <% products.forEach(function (product) { %>
+            <div class="col-md-3">
+                <p class="text-center"><%= product.name; %></p>
+                <p class="text-center"><img src="<%= product.imageURL %>" style="height: 200px; width: 200px;"></p>
+            </div>
+        <% }) %>
+
+    </div>
+</div>
+
+<% include ./partials/footer %>
+
+</body>
+</html>
