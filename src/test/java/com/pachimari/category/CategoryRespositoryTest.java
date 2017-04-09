@@ -49,6 +49,13 @@ public class CategoryRespositoryTest {
     }
 
     @Test
+    public void should_find_by_name() {
+        Category category = Category.builder().id(0).name("Tablet").build();
+        Category res = repository.findByName("Tablet");
+        assertThat(res.equals(category));
+    }
+
+    @Test
     public void should_find_all() {
         List<Category> listCategory = repository.findAll();
         assertThat(listCategory).hasSize(2);

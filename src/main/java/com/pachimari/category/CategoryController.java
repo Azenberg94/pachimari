@@ -41,6 +41,17 @@ public class CategoryController {
         return categoryService.getList();
     }
 
+    @GetMapping("{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDTO getCategoryByName(@PathVariable("name") String name) {
+        return categoryService.getCategoryByName(name);
+    }
+
+    @GetMapping("/category/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDTO getCategoryById(@PathVariable("id") Integer id) {
+        return categoryService.getCategoryById(id);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

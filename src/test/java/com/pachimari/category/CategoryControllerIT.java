@@ -72,6 +72,20 @@ public class CategoryControllerIT {
     }
 
     @Test
+    public void should_get_category_by_name() {
+        given().log().all()
+                .when().get("/categories/Phone")
+                .then().log().all().statusCode(200).body("name", is("Phone"));
+    }
+
+    @Test
+    public void should_get_category_by_id() {
+        given().log().all()
+                .when().get("/categories/category/0")
+                .then().log().all().statusCode(200).body("id", is(0)).body("name", is("Phone"));
+    }
+
+    @Test
     public void should_delete_category() {
 
         given().log().all().contentType(JSON).body(1).when()
