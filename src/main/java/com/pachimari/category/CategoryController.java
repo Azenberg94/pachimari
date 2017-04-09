@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,17 @@ public class CategoryController {
         return categoryService.getList();
     }
 
+    @GetMapping("{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDTO getCategoryByName(@PathVariable("name") String name) {
+        return categoryService.getCategoryByName(name);
+    }
+
+    @GetMapping("/category/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDTO getCategoryById(@PathVariable("id") String id) {
+        return categoryService.getCategoryById(id);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -57,8 +69,9 @@ public class CategoryController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void deleteCategory(@RequestBody int id, BindingResult bindingResult) {
-        categoryService.deleteCategory(id);
+    public ResponseEntity deleteCategory(@RequestBody String id, BindingResult bindingResult) {
+        return new ResponseEntity(categoryService.deleteCategory(id),HttpStatus.OK);
+        //categoryService.deleteCategory(id);
     }
 
 

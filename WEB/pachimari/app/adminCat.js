@@ -32,7 +32,7 @@ module.exports = function(app, models){
 			res.redirect("/");
 		}else{*/
 			setTimeout(function(){ rp("http://"+api.host+"/categories/" ).then(function(body){
-				res.render('adminUser.ejs', {msgError:"", msgValidation : msgValidation, listCat :  JSON.parse(body), session : req.session});
+				res.render('adminCat.ejs', {msgError:"", msgValidation : msgValidation, listCat :  JSON.parse(body), session : req.session});
 			})},1000);
 		//}
 			
@@ -54,9 +54,9 @@ module.exports = function(app, models){
 			}else{
 				
 				rp({
-					url:"http://"+api.host+"/categories/", 
-					method : "POST",
-					body : [req.body.name]
+					url:"http://"+api.host+"/categories/"+req.body.name, 
+					method : "GET"
+				
 				}).then(function(body){
 					if(body){
 						msgError="Cette catégorie existe déjà !";
@@ -113,11 +113,10 @@ module.exports = function(app, models){
 				msgError = "Veuillez saisir un nom !"			
 			}else{	
 				rp({
-				url:"http://"+api.host+"/categories/", 
-				method : "POST",
-				body : [req.body.name]
+					url:"http://"+api.host+"/categories/"+req.body.name, 
+					method : "GET"
 				}).then(function(body){
-					if(JSON.parse(body).length>0 && req.body.nameOld != req.body.name ){
+					if(JSON.parse(body) && req.body.nameOld != req.body.name ){
 						msgError="Ce nom de catégorie est déjà utilisée ! ";
 					}
 				}).catch(function (err) {
@@ -132,7 +131,7 @@ module.exports = function(app, models){
 							},
 							json:{ 
 							  "id" : req.body.id,
-							  "name": req.body.lastName
+							  "name": req.body.name
 							}	
 						}).then(function(body){
 							//console.log("Body 2 : " + body)
@@ -181,7 +180,7 @@ module.exports = function(app, models){
 		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
 		}else{*/
-			rp("http://"+api.host+"/categories/"+req.params.tagId ).then(function(body){
+			rp("http://"+api.host+"/categories/category/"+req.params.tagId ).then(function(body){
 				res.render('adminCatUpdate.ejs', {msgError:"", msgValidation : msgValidation, listCat :  JSON.parse(body), session : req.session});
 			});
 		//}
@@ -194,7 +193,7 @@ module.exports = function(app, models){
 		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
 		}else{*/
-			rp("http://"+api.host+"/categories/"+req.params.tagId ).then(function(body){
+			rp("http://"+api.host+"/categories/category/"+req.params.tagId ).then(function(body){
 				res.render('adminCatUpdate.ejs', {msgError:"Ce nom de catégorie est déjà utilisé !", msgValidation : msgValidation, listCat :  JSON.parse(body), session : req.session});
 			});
 		//}
@@ -210,14 +209,13 @@ module.exports = function(app, models){
 			rp({
 				url: "http://"+api.host+"/categories/" ,
 				method: "DELETE",
-				
 				body: [req.params.tagId]
 			}).then(function(body){
 				res.redirect("/adminCat/delete/")
 			}).catch(function (err) {
 				msgError = "Erreur lors du Delete ! Merci de réessayer. !"
 				console.log("err : " +err)
-				rp("http://"+api.host+"/user/" ).then(function(body){
+				rp("http://"+api.host+"/categories/" ).then(function(body){
 					res.render('adminCat.ejs', {msgError:msgError, msgValidation : msgValidation, listCat :  JSON.parse(body), session : req.session});
 				});
 				

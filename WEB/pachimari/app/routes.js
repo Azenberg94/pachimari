@@ -7,6 +7,7 @@ module.exports = function(app, models){
 	require("./adminProduct")(app, models);
 	require("./adminUser")(app, models);
 	require("./adminCat")(app, models);
+	require("./profile")(app, models);
 	require("./logout")(app, models);
 }
 
