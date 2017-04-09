@@ -3,6 +3,8 @@ package com.pachimari.category;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
+import javax.persistence.GeneratedValue;
+
 @Builder
 @Getter
 @Setter
@@ -11,6 +13,7 @@ import org.springframework.data.annotation.Id;
 public class Category {
 
     @Id
+    @GeneratedValue
     private int id;
 
     private String name;
