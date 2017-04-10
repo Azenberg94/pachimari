@@ -6,7 +6,6 @@ module.exports = function(app, models){
 	var request = require('request');
 	var api = models.myApi; 
 	var bcrypt = require('bcrypt-nodejs');
-
 				
 	// =====================================
 	// adminUser ==============================
@@ -180,13 +179,12 @@ module.exports = function(app, models){
 			}else if(!req.body.ville){
 				 msgError = "Veuillez saisir votre ville ! "  				
 			}else{
-				console.log("My username = " + req.body.username)
+				
 				rp({
 				url:"http://"+api.host+"/auth/", 
 				method : "POST",
 				body : [req.body.username]
 				}).then(function(body){
-					
 					if(JSON.parse(body).length>0 && req.body.username != req.body.loginOld ){
 						msgError="Ce nom de compte est déjà utilisé ! ";
 					}
@@ -220,6 +218,31 @@ module.exports = function(app, models){
 							});
 							
 						});
+						
+					}
+					if(req.body.username != req.body.loginOld){
+						rp({
+							url:"http://"+api.host+"/auth/", 
+							method : "POST",
+							body : [req.body.loginOld]
+						}).then(function(body){
+								 
+							rp({
+								url: "http://"+api.host+"/auth/" ,
+								method: "PUT",
+								headers:{ 
+									'Content-Type': 'application/json'
+								},
+								json:{ 
+								  "id" : JSON.parse(body).id,
+								  "login": req.body.username,
+								  "pwd": JSON.parse(body).pwd
+								}
+							}).catch(function (err) {})
+						}).catch(function (err) {
+							//console.log("Error rp1 : " + err)
+						})
+						
 						
 					}
 			
@@ -292,7 +315,6 @@ module.exports = function(app, models){
 			rp({
 				url: "http://"+api.host+"/auth/" ,
 				method: "DELETE",
-				
 				body: [req.params.tagLogin]
 			})).then(function(body){
 				res.redirect("/adminUser/delete/")
@@ -332,25 +354,24 @@ module.exports = function(app, models){
 				method : "POST",
 				body : [req.params.tagLogin]
 			}).then(function(body){
-					if(body){
-					
-						rp({
-								url: "http://"+api.host+"/auth/" ,
-								method: "PUT",
-								headers:{ 
-									'Content-Type': 'application/json'
-								},
-								json:{ 
-								  "id" : JSON.parse(body).id,
-								  "login": JSON.parse(body).login,
-								  "pwd": bcrypt.hashSync('password',null,null)
-								}	
-							}).then(function(body){
-								rp("http://"+api.host+"/user/" ).then(function(body){
-									res.render('adminUser.ejs', {msgError:"", msgValidation : "Le mot de passe de "+req.params.tagLogin+" a bien été modifié !", listUser :  JSON.parse(body), session : req.session});
-								});
-							})
-					}
+				if(body){
+					rp({
+						url: "http://"+api.host+"/auth/" ,
+						method: "PUT",
+						headers:{ 
+							'Content-Type': 'application/json'
+						},
+						json:{ 
+						  "id" : JSON.parse(body).id,
+						  "login": JSON.parse(body).login,
+						  "pwd": bcrypt.hashSync('password',null,null)
+						}	
+					}).then(function(body){
+						rp("http://"+api.host+"/user/" ).then(function(body){
+							res.render('adminUser.ejs', {msgError:"", msgValidation : "Le mot de passe de "+req.params.tagLogin+" a bien été modifié !", listUser :  JSON.parse(body), session : req.session});
+						});
+					})
+				}
 			})
 		}
 			

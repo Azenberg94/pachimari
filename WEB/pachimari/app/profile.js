@@ -143,7 +143,7 @@ module.exports = function(app, models){
 								  "pwd": bcrypt.hashSync(req.body.pwd1,null,null)
 								}	
 							}).then(function(body){
-								res.redirect('/profile/valide')
+								res.redirect('profile/valide')
 							})
 						}else{
 							rp("http://"+api.host+"/user/"+req.session.login ).then(function(body){

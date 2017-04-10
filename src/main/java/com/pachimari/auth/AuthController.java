@@ -55,6 +55,7 @@ public class AuthController {
     public AuthDto getAuthById(@PathVariable("auth_id") String id){
         return authService.getAuthById(id);
     }
+
     @PutMapping()
     public ResponseEntity updateProduct(@RequestBody @Valid AuthDto authDto, BindingResult bindingResult){
         authService.updateAuth(authDto);
