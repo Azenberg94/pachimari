@@ -26,32 +26,32 @@ module.exports = function(app, models){
 	app.get('/adminProduct', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/categories/" ).then(function(body){
 				listCat = JSON.parse(body);
 			}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
 				res.render('adminProduct.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
 			})},500)
 			);
-		//}
+		}
 			
 	});
 	
 	app.get('/adminProduct/valide', function(req, res, next) {
 		msgError="";
 		msgValidation="Produit ajouté !";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/categories/" ).then(function(body){
 				listCat = JSON.parse(body);
 			}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
 				res.render('adminProduct.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
 			})},500)
 			);
-		//}
+		}
 			
 	});
 
@@ -60,10 +60,9 @@ module.exports = function(app, models){
 	app.post('/adminProduct', multer({storage: storage}).single('imageURL'),function (req, res, next) {
 		msgError="";
 		msgValidation="";
-		console.log(req.file)
-		// if(!req.session.type || (req.session.type && req.session.type!="admin")){
-			// res.redirect("/");
-		// }else{
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
+			res.redirect("/");
+		}else{
 			if (!req.body.name){
 				msgError = "Veuillez saisir un nom !"
 				 res.redirect('/adminProduct');
@@ -131,7 +130,7 @@ module.exports = function(app, models){
 					}
 				});
 			}
-		// }
+		}
 	});
 	
 	// process the signup form
@@ -139,9 +138,9 @@ module.exports = function(app, models){
 		msgError="";
 		msgValidation="";
 	
-		// if(!req.session.type || (req.session.type && req.session.type!="admin")){
-			// res.redirect("/");
-		// }else{
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
+			res.redirect("/");
+		}else{
 			if (!req.body.name){
 				msgError = "Veuillez saisir un nom !"
 				 res.redirect('/adminProduct');
@@ -208,31 +207,31 @@ module.exports = function(app, models){
 				}
 
 			}
-		// }
+		}
 	});
 
 	app.get('/adminProduct/update/valide', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/categories/" ).then(function(body){
 				listCat = JSON.parse(body);
 			}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
 				res.render('adminProduct.ejs', {msgError:"", msgValidation : "Modification enregistrée !", listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
 			})},500)
 			);
-		//}
+		}
 			
 	});
 	
 	app.get('/adminProduct/update/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/categories/" ).then(function(body){
 				listCat = JSON.parse(body);
 			}).then(setTimeout(function(){rp("http://"+api.host+"/product/"+req.params.tagId  ).then(function(body){
@@ -240,32 +239,32 @@ module.exports = function(app, models){
 			})},500)
 			);
 	
-		//}
+		}
 			
 	});
 	
 	app.get('/adminProduct/update/error/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/categories/" ).then(function(body){
 				listCat = JSON.parse(body);
 			}).then(setTimeout(function(){rp("http://"+api.host+"/product/"+req.params.tagId  ).then(function(body){
 				res.render('adminProductUpdate.ejs', {msgError:"Ce nom de produit est déjà utilisé pour cette marque et ce type!", msgValidation : msgValidation, listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
 			})},500)
 			);
-		//}
+		}
 			
 	});
 	
 	app.get('/adminProduct/delete/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation=""
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp({
 				url: "http://"+api.host+"/product/" ,
 				method: "DELETE",
@@ -285,28 +284,23 @@ module.exports = function(app, models){
 				);
 				
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/adminProduct/delete/', function(req, res, next) {
 		msgError="";
 		msgValidation=""
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/categories/" ).then(function(body){
 				listCat = JSON.parse(body);
 			}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
 				res.render('adminProduct.ejs', {msgError:msgError, msgValidation : "Produit supprimé !", listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
 			})},500)
 			);
-	
-	
-		//}
-			
+		}	
 	});
-
-
 
 };

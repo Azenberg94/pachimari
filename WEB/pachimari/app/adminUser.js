@@ -15,27 +15,26 @@ module.exports = function(app, models){
 	app.get('/adminUser', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/user/" ).then(function(body){
 				res.render('adminUser.ejs', {msgError:"", msgValidation : msgValidation, listUser :  JSON.parse(body), session : req.session});
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/adminUser/valide', function(req, res, next) {
 		msgError="";
 		msgValidation="Utilisateur ajouté !";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			setTimeout(function(){ rp("http://"+api.host+"/user/" ).then(function(body){
 				res.render('adminUser.ejs', {msgError:"", msgValidation : msgValidation, listUser :  JSON.parse(body), session : req.session});
-			})},1000);
-		//}
-			
+			})},500);
+		}	
 	});
 
 
@@ -44,10 +43,10 @@ module.exports = function(app, models){
 		msgError="";
 		msgValidation="";
 		
-		// if(!req.session.type || (req.session.type && req.session.type!="admin")){
-			// res.redirect("/");
-		// }else{
-				msgError="";
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
+			res.redirect("/");
+		}else{
+			msgError="";
 			if (!req.body.username){
 				msgError = "Veuillez saisir un login !"
 				res.redirect('/adminUser');
@@ -152,19 +151,17 @@ module.exports = function(app, models){
 				
 
 			}  
-		//}
+		}
 	});
 	
 	// process the signup form
 	app.post('/adminUser/update', function (req, res, next) {
 		msgError="";
 		msgValidation="";
-		
 	
-		
-		// if(!req.session.type || (req.session.type && req.session.type!="admin")){
-			// res.redirect("/");
-		// }else{
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
+			res.redirect("/");
+		}else{
 			if (!req.body.username){
 				msgError = "Veuillez saisir un login !"
 				
@@ -238,62 +235,60 @@ module.exports = function(app, models){
 				});
 				
 			}
-		// }
+		}
 	});
 
 	app.get('/adminUser/update/valide', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			setTimeout(function(){ rp("http://"+api.host+"/user/" ).then(function(body){
 				res.render('adminUser.ejs', {msgError:"", msgValidation : "Modification enregistrée !", listUser :  JSON.parse(body), session : req.session});
-			});}, 1000);
+			});}, 500);
 			
-		//}
+		}
 			
 	});
 	
 	app.get('/adminUser/update/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/user/"+req.params.tagId ).then(function(body){
 				res.render('adminUserUpdate.ejs', {msgError:"", msgValidation : msgValidation, listUser :  JSON.parse(body), session : req.session});
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/adminUser/update/error/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/user/"+req.params.tagId ).then(function(body){
 				res.render('adminUserUpdate.ejs', {msgError:"Ce nom de produit est déjà utilisé pour cette marque et ce type!", msgValidation : msgValidation, listUser :  JSON.parse(body), session : req.session});
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/adminUser/delete/:tagId/:tagLogin', function(req, res, next) {
 		msgError="";
 		msgValidation=""
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp({
 				url: "http://"+api.host+"/user/" ,
 				method: "DELETE",
-				
 				body: [req.params.tagId]
 			}).then(
-			
 			rp({
 				url: "http://"+api.host+"/auth/" ,
 				method: "DELETE",
@@ -309,29 +304,29 @@ module.exports = function(app, models){
 				});
 				
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/adminUser/delete/', function(req, res, next) {
 		msgError="";
 		msgValidation=""
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/user/" ).then(function(body){
 				res.render('adminUser.ejs', {msgError:"", msgValidation : "User supprimé !", listUser :  JSON.parse(body), session : req.session});
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/adminUser/resetPdw/:tagLogin', function(req, res, next) {
 		msgError="";
 		msgValidation=""
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp({
 				url:"http://"+api.host+"/auth/", 
 				method : "POST",
@@ -357,7 +352,7 @@ module.exports = function(app, models){
 							})
 					}
 			})
-		//}
+		}
 			
 	});
 

@@ -15,26 +15,26 @@ module.exports = function(app, models){
 	app.get('/adminCat', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/categories/" ).then(function(body){
 				res.render('adminCat.ejs', {msgError:"", msgValidation : msgValidation, listCat :  JSON.parse(body), session : req.session});
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/adminCat/valide', function(req, res, next) {
 		msgError="";
 		msgValidation="Categorie ajoutée !";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			setTimeout(function(){ rp("http://"+api.host+"/categories/" ).then(function(body){
 				res.render('adminCat.ejs', {msgError:"", msgValidation : msgValidation, listCat :  JSON.parse(body), session : req.session});
-			})},1000);
-		//}
+			})},500);
+		}
 			
 	});
 
@@ -44,9 +44,9 @@ module.exports = function(app, models){
 		msgError="";
 		msgValidation="";
 		
-		// if(!req.session.type || (req.session.type && req.session.type!="admin")){
-			// res.redirect("/");
-		// }else{
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
+			 res.redirect("/");
+		 }else{
 				msgError="";
 			if (!req.body.name){
 				msgError = "Veuillez saisir un nom !"
@@ -98,7 +98,7 @@ module.exports = function(app, models){
 				
 
 			}  
-		//}
+		}
 	});
 	
 
@@ -106,9 +106,9 @@ module.exports = function(app, models){
 		msgError="";
 		msgValidation="";
 		
-		// if(!req.session.type || (req.session.type && req.session.type!="admin")){
-			// res.redirect("/");
-		// }else{
+		 if(!req.session.type || (req.session.type && req.session.type!="admin")){
+			 res.redirect("/");
+		 }else{
 			if (!req.body.name){
 				msgError = "Veuillez saisir un nom !"			
 			}else{	
@@ -157,55 +157,54 @@ module.exports = function(app, models){
 				});
 				
 			}
-		// }
+		 }
 	});
 
 	app.get('/adminCat/update/valide', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			setTimeout(function(){ rp("http://"+api.host+"/categories/" ).then(function(body){
 				res.render('adminCat.ejs', {msgError:"", msgValidation : "Modification enregistrée !", listCat :  JSON.parse(body), session : req.session});
-			});}, 1000);
-			
-		//}
+			});}, 500);	
+		}
 			
 	});
 	
 	app.get('/adminCat/update/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/categories/category/"+req.params.tagId ).then(function(body){
 				res.render('adminCatUpdate.ejs', {msgError:"", msgValidation : msgValidation, listCat :  JSON.parse(body), session : req.session});
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/adminCat/update/error/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/categories/category/"+req.params.tagId ).then(function(body){
 				res.render('adminCatUpdate.ejs', {msgError:"Ce nom de catégorie est déjà utilisé !", msgValidation : msgValidation, listCat :  JSON.parse(body), session : req.session});
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/adminCat/delete/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation=""
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp({
 				url: "http://"+api.host+"/categories/" ,
 				method: "DELETE",
@@ -220,20 +219,20 @@ module.exports = function(app, models){
 				});
 				
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/adminCat/delete/', function(req, res, next) {
 		msgError="";
 		msgValidation=""
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/categories/" ).then(function(body){
 				res.render('adminCat.ejs', {msgError:"", msgValidation : "Catégorie supprimée !", listCat :  JSON.parse(body), session : req.session});
 			});
-		//}
+		}
 			
 	});
 	

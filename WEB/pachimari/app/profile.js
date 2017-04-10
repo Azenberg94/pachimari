@@ -15,26 +15,26 @@ module.exports = function(app, models){
 	app.get('/profile', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type)){
+		if(!req.session.type){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/user/"+req.session.login ).then(function(body){
 				res.render('profile.ejs', {msgError:"", msgValidation : msgValidation, user :  JSON.parse(body), session : req.session});
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/profile/valide', function(req, res, next) {
 		msgError="";
 		msgValidation="Compte mise a jour !";
-		/*if(!req.session.type)){
+		if(!req.session.type){
 			res.redirect("/");
-		}else{*/
+		}else{
 			setTimeout(function(){ rp("http://"+api.host+"/user/"+req.session.login ).then(function(body){
 				res.render('profile.ejs', {msgError:"", msgValidation : msgValidation, user :  JSON.parse(body), session : req.session});
 			})},1000);
-		//}
+		}
 			
 	});
 
@@ -44,9 +44,9 @@ module.exports = function(app, models){
 		msgError="";
 		msgValidation="";
 		
-		// if(!req.session.type)){
-			// res.redirect("/");
-		// }else{
+		if(!req.session.type){
+			res.redirect("/");
+		}else{
 			if(!req.body.lastName){
 				msgError = "Veuillez saisir votre nom ! "
 						
@@ -98,20 +98,20 @@ module.exports = function(app, models){
 			
 				
 			
-		// }
+		}
 	});
 
 	
 	app.get('/profile/error', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type)){
+		if(!req.session.type){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp("http://"+api.host+"/user/"+req.session.login ).then(function(body){
 				res.render('profile.ejs', {msgError: "Erreur lors de la modification du compte ! Merci de réessayer. !", msgValidation : msgValidation, user :  JSON.parse(body), session : req.session});
 			});
-		//}
+		}
 			
 	});
 	
@@ -120,44 +120,44 @@ module.exports = function(app, models){
 	app.post('/profile/updatePwd', function(req, res, next) {
 		msgError="";
 		msgValidation=""
-		/*if(!req.session.type)){
+		if(!req.session.type){
 			res.redirect("/");
-		}else{*/
-		if(req.body.pwd1 == req.body.pwd2){
-			rp({
-				url:"http://"+api.host+"/auth/", 
-				method : "POST",
-				body : [req.session.login]
-			}).then(function(body){
-				if(body){
-					if (bcrypt.compareSync(req.body.oldPwd, JSON.parse(body).pwd)){
-						rp({
-							url: "http://"+api.host+"/auth/" ,
-							method: "PUT",
-							headers:{ 
-								'Content-Type': 'application/json'
-							},
-							json:{ 
-							  "id" : JSON.parse(body).id,
-							  "login": JSON.parse(body).login,
-							  "pwd": bcrypt.hashSync(req.body.pwd1,null,null)
-							}	
-						}).then(function(body){
-							res.redirecte('profile/valide')
-						})
-					}else{
-						rp("http://"+api.host+"/user/"+req.session.login ).then(function(body){
-							res.render('profile.ejs', {msgError: "Ancien mot de passe non correcte !", msgValidation : msgValidation, user :  JSON.parse(body), session : req.session});
-						});
-					}
-				}
-			})
 		}else{
-			rp("http://"+api.host+"/user/"+req.session.login ).then(function(body){
-				res.render('profile.ejs', {msgError: "mot de passe non identique !", msgValidation : msgValidation, user :  JSON.parse(body), session : req.session});
-			});
+			if(req.body.pwd1 == req.body.pwd2){
+				rp({
+					url:"http://"+api.host+"/auth/", 
+					method : "POST",
+					body : [req.session.login]
+				}).then(function(body){
+					if(body){
+						if (bcrypt.compareSync(req.body.oldPwd, JSON.parse(body).pwd)){
+							rp({
+								url: "http://"+api.host+"/auth/" ,
+								method: "PUT",
+								headers:{ 
+									'Content-Type': 'application/json'
+								},
+								json:{ 
+								  "id" : JSON.parse(body).id,
+								  "login": JSON.parse(body).login,
+								  "pwd": bcrypt.hashSync(req.body.pwd1,null,null)
+								}	
+							}).then(function(body){
+								res.redirect('/profile/valide')
+							})
+						}else{
+							rp("http://"+api.host+"/user/"+req.session.login ).then(function(body){
+								res.render('profile.ejs', {msgError: "Ancien mot de passe non correcte !", msgValidation : msgValidation, user :  JSON.parse(body), session : req.session});
+							});
+						}
+					}
+				})
+			}else{
+				rp("http://"+api.host+"/user/"+req.session.login ).then(function(body){
+					res.render('profile.ejs', {msgError: "mot de passe non identique !", msgValidation : msgValidation, user :  JSON.parse(body), session : req.session});
+				});
+			}
 		}
-		//}
 			
 	});
 
