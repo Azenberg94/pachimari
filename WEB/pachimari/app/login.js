@@ -55,14 +55,13 @@ module.exports = function(app, models){
 							msgError = "Erreur combinaion Identifiant/mot de passe ! Merci de réessayer." 
 						}
 						
+					}else{
+						msgError = "Erreur combinaion Identifiant/mot de passe ! Merci de réessayer." 
 					}
 						 
 					
 				}).catch(function (err) {
-					
 					msgError = "Erreur combinaion Identifiant/mot de passe ! Merci de réessayer."
-					//res.render('login.ejs', {msgError:msgError, session : req.session});
-						
 				}).then(function(){
 					
 					if(msgError!=""){
