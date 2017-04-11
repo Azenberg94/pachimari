@@ -26,6 +26,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(express.static(__dirname + '/app/image'));
+app.use(express.static('public'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // routes ======================================================================
