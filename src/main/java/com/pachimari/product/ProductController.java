@@ -1,5 +1,7 @@
 package com.pachimari.product;
 
+import jdk.nashorn.internal.runtime.ECMAException;
+import org.apache.http.HttpEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,15 +26,25 @@ public class ProductController {
 
     @GetMapping("/find/{name}/{brand}/{type}")
     public List<ProductDto> getProductByOptionalParameters(@PathVariable("name") String name, @PathVariable("brand") String brand, @PathVariable("type") String type) {
-        name = (name.equals("any")) ? null : name;
-        brand = (brand.equals("any")) ? null : brand;
-        type = (type.equals("any")) ? null : type;
-        return productService.getSelectedProducts(name, brand, type);
+        try {
+            name = (name.equals("any")) ? null : name;
+            brand = (brand.equals("any")) ? null : brand;
+            type = (type.equals("any")) ? null : type;
+            return productService.getSelectedProducts(name, brand, type);
+        }
+        catch(Exception e){
+            return null;
+        }
     }
 
     @GetMapping
     public List<ProductDto> getAllProducts() {
-        return productService.getAllProducts();
+        try {
+            return productService.getAllProducts();
+        }
+        catch(Exception e){
+            return null;
+        }
     }
 
     @PostMapping
@@ -41,27 +53,47 @@ public class ProductController {
         if(bindingResult.hasErrors()){
             throw new InvalidException();
         }
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{product_id}")
-                .buildAndExpand(productService.createProduct(productDto)).toUri();
-        return ResponseEntity.created(location).body(productDto);
+        try {
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{product_id}")
+                    .buildAndExpand(productService.createProduct(productDto)).toUri();
+            return ResponseEntity.created(location).body(productDto);
+        }
+        catch(Exception e){
+            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
+        }
     }
     @GetMapping("/{product_id}")
     public ProductDto getProductById(@PathVariable("product_id") String id){
-        return productService.getProductById(id);
+        try {
+            return productService.getProductById(id);
+        }
+        catch(Exception e){
+            return null;
+        }
     }
     @DeleteMapping()
     public ResponseEntity deleteProduct(@RequestBody String id, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            throw new InvalidException();
+        try {
+            if (bindingResult.hasErrors()) {
+                throw new InvalidException();
+            }
+            return new ResponseEntity(productService.deleteProduct(id), HttpStatus.OK);
         }
-        return new ResponseEntity(productService.deleteProduct(id),HttpStatus.OK);
+        catch(Exception e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping()
     public ResponseEntity updateProduct(@RequestBody @Valid ProductDto productDto, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            throw new InvalidException();
+        try {
+            if (bindingResult.hasErrors()) {
+                throw new InvalidException();
+            }
+            return new ResponseEntity(productService.updateProduct(productDto), HttpStatus.OK);
         }
-        return new ResponseEntity(productService.updateProduct(productDto),HttpStatus.OK);
+        catch(Exception e){
+            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
+        }
     }
 }
