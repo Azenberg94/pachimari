@@ -31,8 +31,19 @@
 			<input type="text" class="form-control" name="brand" value="<%= listProduct.brand %>" required>
 		</div>
 		<div class="form-group">
-			<label>Type</label>
-			<input type="text" class="form-control" name="typeId" value="<%= listProduct.typeId %>"required>
+			<label>Catégorie</label>
+			<select name = "typeId" required>
+				<option value="0" name="typeId">Aucune</option>
+				<%
+				if(listCat){
+					for (var i = 0; i<listCat.length; i++){
+				%>
+					<option value="<%=listCat[i].id%>" name="typeId" <% if(listCat[i].id == listProduct.typeId){ %> SELECTED = "SELECTED" <%} %> ><%=listCat[i].name%></option>
+				<%
+				}}
+				%>
+			</select>
+		
 		</div>
         <div class="form-group">
             <label>Prix</label>
@@ -44,7 +55,6 @@
             <img src="../../<%= listProduct.imageURL %>">
         </div>
 		
-		<img src ="localhost:8080/app/image/imageURL-plow.png">
 		
 		 <input type="hidden" name="nameOld" value="<%= listProduct.name %>">
 		 <input type="hidden" name="brandOld" value="<%= listProduct.brand %>">

@@ -5,10 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by quentin on 05/04/17.
- */
-
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -21,15 +17,27 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public CategoryDTO getCategoryByName(String name) {
+        return CategoryAdapter.toCategoryDTO(categoryRepository.findByName(name));
+    }
+
+    @Override
+    public CategoryDTO getCategoryById(String id) {
+        return CategoryAdapter.toCategoryDTO(categoryRepository.findById(id));
+    }
+
+
+    @Override
     public void createCategory(CategoryDTO categoryDTO) {
         Category category = Category.builder().id(categoryDTO.getId()).name(categoryDTO.getName()).build();
         categoryRepository.save(category);
     }
 
     @Override
-    public void deleteCategory(Integer id) {
+    public CategoryDTO deleteCategory(String id) {
         Category category = categoryRepository.findById(id);
         categoryRepository.delete(category);
+        return CategoryAdapter.toCategoryDTO(category);
     }
 
     @Override

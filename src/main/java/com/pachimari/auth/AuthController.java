@@ -2,8 +2,6 @@ package com.pachimari.auth;
 
 import com.pachimari.exception.InvalideException;
 import com.pachimari.product.InvalidException;
-import com.pachimari.product.ProductAdapter;
-import com.pachimari.product.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +50,10 @@ public class AuthController {
                 .buildAndExpand(authDto).toUri();
         return ResponseEntity.created(location).body(authDto);
 
+    }
+    @GetMapping("/{auth_id}")
+    public AuthDto getAuthById(@PathVariable("auth_id") String id){
+        return authService.getAuthById(id);
     }
 
     @PutMapping()

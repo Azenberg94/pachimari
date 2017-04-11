@@ -31,8 +31,8 @@ public class CategoryRespositoryTest {
     @Before
     public void init() {
         mongoTemplate.dropCollection(Category.class);
-        mongoTemplate.save(Category.builder().id(0).name("Phone").build());
-        mongoTemplate.save(Category.builder().id(1).name("Tablet").build());
+        mongoTemplate.save(Category.builder().id("0").name("Phone").build());
+        mongoTemplate.save(Category.builder().id("1").name("Tablet").build());
         RestAssured.port=localServerPort;
     }
 
@@ -43,8 +43,8 @@ public class CategoryRespositoryTest {
 
     @Test
     public void should_find_by_id() {
-        Category category = Category.builder().id(0).name("Phone").build();
-        Category res = repository.findById(0);
+        Category category = Category.builder().id("0").name("Phone").build();
+        Category res = repository.findById("0");
         assertThat(res.equals(category));
     }
 

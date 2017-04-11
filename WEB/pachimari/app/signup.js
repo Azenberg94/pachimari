@@ -37,12 +37,12 @@ module.exports = function(app, models){
             msgError = "Les mots de passe saisient ne sont pas identiques !"
 			res.render('signup.ejs', {msgError:msgError, session : req.session});
 			
-        }else if(!req.body.lastName){
-            msgError = "Veuillez saisir votre nom ! "
+        }else if(!req.body.lastName || req.body.lastName.length<3){
+            msgError = "Veuillez saisir un nom de plus de 3 caractères! "
 			res.render('signup.ejs', {msgError:msgError, session : req.session});
 			
-        }else if(!req.body.name){
-             msgError = "Veuillez saisir votre prénom ! "
+        }else if(!req.body.name || req.body.name.length<3){
+             msgError = "Veuillez saisir un prénom de plus de 3 caractères!! "
 			 res.render('signup.ejs', {msgError:msgError, session : req.session});
         }else if(!req.body.mail){
              msgError = "Veuillez saisir votre mail ! "  
@@ -62,7 +62,11 @@ module.exports = function(app, models){
 			 
         }else{
 			
-			rp("http://"+api.host+"/user/"+req.body.username).then(function(body){
+			rp({
+				url:"http://"+api.host+"/auth/", 
+				method : "POST",
+				body : [req.body.username]
+			}).then(function(body){
 				if(body){
 					msgError="Cet utilisateur existe déjà !";
 				}
@@ -90,6 +94,7 @@ module.exports = function(app, models){
 					}).then(function(body){
 						//console.log("Body 1 : " + body)
 					}).catch(function (err) {
+						console.log(err);
 						msgError="Erreur veuillez lors de l'inscription. Veuillez recommmencer !";
 						
 					});

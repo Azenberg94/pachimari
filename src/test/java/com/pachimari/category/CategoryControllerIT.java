@@ -39,8 +39,8 @@ public class CategoryControllerIT {
     @Before
     public void init() {
         mongoTemplate.dropCollection(Category.class);
-        mongoTemplate.save(Category.builder().id(0).name("Phone").build());
-        mongoTemplate.save(Category.builder().id(1).name("Tablet").build());
+        mongoTemplate.save(Category.builder().id("0").name("Phone").build());
+        mongoTemplate.save(Category.builder().id("1").name("Tablet").build());
         RestAssured.port=localServerPort;
     }
 
@@ -53,7 +53,7 @@ public class CategoryControllerIT {
     @Test
     public void should_create_category() {
 
-        CategoryDTO categoryDTO = CategoryDTO.builder().id(1).name("Phone").build();
+        CategoryDTO categoryDTO = CategoryDTO.builder().id("1").name("Phone").build();
 
         given().log().all().contentType(JSON).body(categoryDTO)
                 .when().post("/categories")
@@ -83,12 +83,12 @@ public class CategoryControllerIT {
     @Test
     public void should_update_category() {
 
-        CategoryDTO categoryDTO = CategoryDTO.builder().id(1).name("Computer").build();
+        CategoryDTO categoryDTO = CategoryDTO.builder().id("1").name("Computer").build();
         given().log().all().contentType(JSON).body(categoryDTO).when()
                 .put("/categories")
                 .then()
                 .statusCode(200)
-                .body("id",is(1))
+                .body("id",is("1"))
                 .body("name",is("Computer")).log().all();
 
     }

@@ -2,14 +2,14 @@ package com.pachimari.category;
 
 import java.util.List;
 
-/**
- * Created by quentin on 05/04/17.
- */
+
 public interface CategoryService {
 
     public List<CategoryDTO> getList();
+    public CategoryDTO getCategoryByName(String name);
+    public CategoryDTO getCategoryById(String id);
     public void createCategory(CategoryDTO categoryDTO);
-    public void deleteCategory(Integer id);
+    public CategoryDTO deleteCategory(String id);
     public CategoryDTO updateCategory(CategoryDTO categoryDTO);
 
 }

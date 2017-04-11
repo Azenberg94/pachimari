@@ -37,5 +37,10 @@ public class AuthServiceImpl implements  AuthService{
     }
 
 
+    @Override
+    public AuthDto getAuthById(String id){
+        AuthEntity authEntity = authRepository.findById(id);
+        return AuthAdapter.toAuthDto(authEntity);
+    }
 
 }

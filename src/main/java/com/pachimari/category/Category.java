@@ -1,7 +1,9 @@
 package com.pachimari.category;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Builder
 @Getter
@@ -11,7 +13,7 @@ import org.springframework.data.annotation.Id;
 public class Category {
 
     @Id
-    private int id;
+    private String id;
 
     private String name;
 
