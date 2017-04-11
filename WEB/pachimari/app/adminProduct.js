@@ -56,7 +56,7 @@ module.exports = function(app, models){
 	});
 
 
-	// process the signup form
+	// process the adminProduct form
 	app.post('/adminProduct', multer({storage: storage}).single('imageURL'),function (req, res, next) {
 		msgError="";
 		msgValidation="";
@@ -77,8 +77,8 @@ module.exports = function(app, models){
 				res.redirect('/adminProduct');
 			}else{
 				rp("http://"+api.host+"/product/find/"+req.body.name+"/"+req.body.brand+"/"+req.body.typeId).then(function(body){
-					console.log("body ! " + body)
-					if(body){
+					console.log(JSON.parse(body).length)
+					if(JSON.parse(body).length>0){
 						msgError="Ce nom de produit est déjà utilisé pour cette marque et ce type! ";
 					}
 				}).catch(function (err) {
@@ -159,7 +159,7 @@ module.exports = function(app, models){
 				}else{
 					rp("http://"+api.host+"/product/find/"+req.body.name+"/"+req.body.brand+"/"+req.body.typeId).then(function(body){
 						
-						if(body && (req.body.name != req.body.nameOld || req.body.brand != req.body.brandOld || req.body.type == req.body.typeOld)){
+						if(JSON.parse(body).length>0 && (req.body.name != req.body.nameOld || req.body.brand != req.body.brandOld || req.body.type == req.body.typeOld)){
 							msgError="Ce nom de produit est déjà utilisé pour cette marque et ce type! ";
 						}
 					}).catch(function (err) {
