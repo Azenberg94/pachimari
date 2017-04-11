@@ -37,7 +37,6 @@ module.exports = function(app, models){
 					body: [req.body.username]
 				}).then(function(body){
 					if(body){
-						console.log(body);
 						var jsonBody =  JSON.parse(body);
 						
 						if(jsonBody.login == req.body.username && bcrypt.compareSync(req.body.password, jsonBody.pwd)){
@@ -56,10 +55,16 @@ module.exports = function(app, models){
 							msgError = "Erreur combinaion Identifiant/mot de passe ! Merci de réessayer." 
 						}
 						
-					}else{
-						msgError = "Erreur combinaion Identifiant/mot de passe ! Merci de réessayer." 
 					}
+						 
+					
+				}).catch(function (err) {
+					
+					msgError = "Erreur combinaion Identifiant/mot de passe ! Merci de réessayer."
+					//res.render('login.ejs', {msgError:msgError, session : req.session});
+						
 				}).then(function(){
+					
 					if(msgError!=""){
 						res.render('login.ejs', {msgError:msgError, session : req.session});
 					}
