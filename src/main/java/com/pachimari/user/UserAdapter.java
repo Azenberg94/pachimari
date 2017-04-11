@@ -29,7 +29,7 @@ public  class UserAdapter {
                 .build();
     }
     public static List<UserDTO> listToUserDTO(List<User> list){
-       List<UserDTO> userDTOList = new ArrayList<UserDTO>();
+       List<UserDTO> userDTOList = new ArrayList<>();
      for(User userEntity : list){
          userDTOList.add(toUserDTO(userEntity));
      }

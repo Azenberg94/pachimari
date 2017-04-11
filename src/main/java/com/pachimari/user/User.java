@@ -2,12 +2,16 @@ package com.pachimari.user;
 
 import com.pachimari.order.model.OrderEntity;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 
 /**
@@ -19,27 +23,25 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "users")
+@EqualsAndHashCode(exclude = {"orders"})
 @ToString(exclude = "orders")
-@EqualsAndHashCode(exclude = "orders")
-/*@Document(collection="user")*/
+@Document(collection = "user")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private String id;
 
     private String name;
 
     private String email;
 
+    @Indexed
     private String login;
 
     private String type;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @DBRef
     private Set<OrderEntity> orders = new HashSet<>(0);
-
 }
 

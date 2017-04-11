@@ -1,20 +1,17 @@
-package com.pachimari.user;
+package com.pachimari.item.model;
 
 import com.pachimari.order.model.OrderEntity;
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.GeneratedValue;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-/**
- * Created by Pierre on 28/02/2017.
- */
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,29 +19,20 @@ import static javax.persistence.GenerationType.IDENTITY;
 @ToString(exclude = "orders")
 @Getter
 @Setter
-public class UserDTO {
-
-    @NotNull
+public class ItemDTO {
     @GeneratedValue(strategy = IDENTITY)
-    private String id;
-
-    @NotBlank
     @NotNull
-    @Size(min = 3, max = 40)
-    private String name;
+    @Min(0)
+    private int itemId;
 
     @NotNull
     @NotBlank
-    private String login;
+    private String itemName;
 
     @NotNull
-    @NotBlank
-    private String email;
+    @Min(0)
+    private Float itemPrice;
 
     @NotNull
-    @NotBlank
-    private String type;
-
-    @NotNull
-    private Set<OrderEntity> orders = new HashSet<>(0);
+    private Set<OrderEntity> orders = new HashSet<>();
 }
