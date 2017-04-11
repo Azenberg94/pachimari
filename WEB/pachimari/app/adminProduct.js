@@ -4,6 +4,7 @@ module.exports = function(app, models){
 	var idImage=gid.create();
     var msgError="";
 	var msgValidation = "";
+	var listCat;
 	var rp = require('request-promise');
 	var request = require('request');
 	var api = models.myApi;
@@ -25,38 +26,43 @@ module.exports = function(app, models){
 	app.get('/adminProduct', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
-			rp("http://"+api.host+"/product/" ).then(function(body){
-				res.render('adminProduct.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
-			});
-		//}
+		}else{
+			rp("http://"+api.host+"/categories/" ).then(function(body){
+				listCat = JSON.parse(body);
+			}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
+				res.render('adminProduct.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
+			})},500)
+			);
+		}
 			
 	});
 	
 	app.get('/adminProduct/valide', function(req, res, next) {
 		msgError="";
 		msgValidation="Produit ajouté !";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
-			rp("http://"+api.host+"/product/" ).then(function(body){
-				res.render('adminProduct.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
-			});
-		//}
+		}else{
+			rp("http://"+api.host+"/categories/" ).then(function(body){
+				listCat = JSON.parse(body);
+			}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
+				res.render('adminProduct.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
+			})},500)
+			);
+		}
 			
 	});
 
 
-	// process the signup form
+	// process the adminProduct form
 	app.post('/adminProduct', multer({storage: storage}).single('imageURL'),function (req, res, next) {
 		msgError="";
 		msgValidation="";
-		console.log(req.file)
-		// if(!req.session.type || (req.session.type && req.session.type!="admin")){
-			// res.redirect("/");
-		// }else{
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
+			res.redirect("/");
+		}else{
 			if (!req.body.name){
 				msgError = "Veuillez saisir un nom !"
 				 res.redirect('/adminProduct');
@@ -71,6 +77,7 @@ module.exports = function(app, models){
 				res.redirect('/adminProduct');
 			}else{
 				rp("http://"+api.host+"/product/find/"+req.body.name+"/"+req.body.brand+"/"+req.body.typeId).then(function(body){
+					console.log(JSON.parse(body).length)
 					if(JSON.parse(body).length>0){
 						msgError="Ce nom de produit est déjà utilisé pour cette marque et ce type! ";
 					}
@@ -95,9 +102,12 @@ module.exports = function(app, models){
 							//console.log("Body 2 : " + body)
 						}).catch(function (err) {
 							msgError = "Erreur lors de la création du produit ! Merci de réessayer. !"
-							rp("http://"+api.host+"/product/" ).then(function(body){
-								res.render('adminProduct.ejs', {msgError:msgError, msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
-							});
+							rp("http://"+api.host+"/categories/" ).then(function(body){
+								listCat = JSON.parse(body);
+							}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
+								res.render('adminProduct.ejs', {msgError:msgError, msgValidation : msgValidation, listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
+							})},500)
+							);
 							
 						});
 						
@@ -111,25 +121,26 @@ module.exports = function(app, models){
 							res.render('adminProduct.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
 						});*/
 					}else{
-						rp("http://"+api.host+"/product/" ).then(function(body){
-							res.render('adminProduct.ejs', {msgError:msgError, msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
-						});
+						rp("http://"+api.host+"/categories/" ).then(function(body){
+							listCat = JSON.parse(body);
+						}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
+							res.render('adminProduct.ejs', {msgError:msgError, msgValidation : msgValidation, listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
+						})},500)
+						);
 					}
 				});
 			}
-		// }
+		}
 	});
 	
 	// process the signup form
 	app.post('/adminProduct/update',multer({storage: storage}).single('imageURL'), function (req, res, next) {
 		msgError="";
 		msgValidation="";
-		
 	
-		
-		// if(!req.session.type || (req.session.type && req.session.type!="admin")){
-			// res.redirect("/");
-		// }else{
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
+			res.redirect("/");
+		}else{
 			if (!req.body.name){
 				msgError = "Veuillez saisir un nom !"
 				 res.redirect('/adminProduct');
@@ -147,6 +158,7 @@ module.exports = function(app, models){
 					res.redirect("adminProduct/update/valide")
 				}else{
 					rp("http://"+api.host+"/product/find/"+req.body.name+"/"+req.body.brand+"/"+req.body.typeId).then(function(body){
+						
 						if(JSON.parse(body).length>0 && (req.body.name != req.body.nameOld || req.body.brand != req.body.brandOld || req.body.type == req.body.typeOld)){
 							msgError="Ce nom de produit est déjà utilisé pour cette marque et ce type! ";
 						}
@@ -172,9 +184,13 @@ module.exports = function(app, models){
 								//console.log("Body 2 : " + body)
 							}).catch(function (err) {
 								msgError = "Erreur lors de la création du produit ! Merci de réessayer. !"
-								rp("http://"+api.host+"/product/" ).then(function(body){
-									res.render('adminProductUpdate.ejs', {msgError:msgError, msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
-								});
+
+								rp("http://"+api.host+"/categories/" ).then(function(body){
+									listCat = JSON.parse(body);
+								}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
+									res.render('adminProduct.ejs', {msgError:msgError, msgValidation : msgValidation, listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
+								})},500)
+								);
 								
 							});
 							
@@ -185,62 +201,70 @@ module.exports = function(app, models){
 							msgValidation = "Produit ajouté !"
 							res.redirect("/adminProduct/update/valide");
 						}else{
-							rp("http://"+api.host+"/product/" ).then(function(body){
-								res.redirect('/adminProduct/update/error/'+req.body.id);
-							});
+							res.redirect('/adminProduct/update/error/'+req.body.id);
 						}
 					});
 				}
 
 			}
-		// }
+		}
 	});
 
 	app.get('/adminProduct/update/valide', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
-			rp("http://"+api.host+"/product/" ).then(function(body){
-				res.render('adminProduct.ejs', {msgError:"", msgValidation : "Modification enregistrée !", listProduct :  JSON.parse(body), session : req.session});
-			});
-		//}
+		}else{
+			rp("http://"+api.host+"/categories/" ).then(function(body){
+				listCat = JSON.parse(body);
+			}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
+				res.render('adminProduct.ejs', {msgError:"", msgValidation : "Modification enregistrée !", listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
+			})},500)
+			);
+		}
 			
 	});
 	
 	app.get('/adminProduct/update/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
-			rp("http://"+api.host+"/product/"+req.params.tagId ).then(function(body){
-				res.render('adminProductUpdate.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
-			});
-		//}
+		}else{
+			rp("http://"+api.host+"/categories/" ).then(function(body){
+				listCat = JSON.parse(body);
+			}).then(setTimeout(function(){rp("http://"+api.host+"/product/"+req.params.tagId  ).then(function(body){
+				res.render('adminProductUpdate.ejs', {msgError:"", msgValidation : msgValidation, listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
+			})},500)
+			);
+	
+		}
 			
 	});
 	
 	app.get('/adminProduct/update/error/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation="";
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
-			rp("http://"+api.host+"/product/"+req.params.tagId ).then(function(body){
-				res.render('adminProductUpdate.ejs', {msgError:"Ce nom de produit est déjà utilisé pour cette marque et ce type!", msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
-			});
-		//}
+		}else{
+			rp("http://"+api.host+"/categories/" ).then(function(body){
+				listCat = JSON.parse(body);
+			}).then(setTimeout(function(){rp("http://"+api.host+"/product/"+req.params.tagId  ).then(function(body){
+				res.render('adminProductUpdate.ejs', {msgError:"Ce nom de produit est déjà utilisé pour cette marque et ce type!", msgValidation : msgValidation, listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
+			})},500)
+			);
+		}
 			
 	});
 	
 	app.get('/adminProduct/delete/:tagId', function(req, res, next) {
 		msgError="";
 		msgValidation=""
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
+		}else{
 			rp({
 				url: "http://"+api.host+"/product/" ,
 				method: "DELETE",
@@ -251,28 +275,32 @@ module.exports = function(app, models){
 			}).catch(function (err) {
 				msgError = "Erreur lors du Delete ! Merci de réessayer. !"
 				console.log("err : " +err)
-				rp("http://"+api.host+"/product/" ).then(function(body){
-					res.render('adminProduct.ejs', {msgError:msgError, msgValidation : msgValidation, listProduct :  JSON.parse(body), session : req.session});
-				});
+				
+				rp("http://"+api.host+"/categories/" ).then(function(body){
+					listCat = JSON.parse(body);
+				}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
+					res.render('adminProduct.ejs', {msgError:msgError, msgValidation : msgValidation, listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
+				})},500)
+				);
 				
 			});
-		//}
+		}
 			
 	});
 	
 	app.get('/adminProduct/delete/', function(req, res, next) {
 		msgError="";
 		msgValidation=""
-		/*if(!req.session.type || (req.session.type && req.session.type!="admin")){
+		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
-		}else{*/
-			rp("http://"+api.host+"/product/" ).then(function(body){
-				res.render('adminProduct.ejs', {msgError:"", msgValidation : "Produit supprimé !", listProduct :  JSON.parse(body), session : req.session});
-			});
-		//}
-			
+		}else{
+			rp("http://"+api.host+"/categories/" ).then(function(body){
+				listCat = JSON.parse(body);
+			}).then(setTimeout(function(){rp("http://"+api.host+"/product/" ).then(function(body){
+				res.render('adminProduct.ejs', {msgError:msgError, msgValidation : "Produit supprimé !", listProduct :  JSON.parse(body), listCat : listCat, session : req.session});
+			})},500)
+			);
+		}	
 	});
-
-
 
 };

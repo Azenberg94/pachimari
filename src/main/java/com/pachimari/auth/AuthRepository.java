@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface AuthRepository extends MongoRepository<AuthEntity, String> {
     AuthEntity findByLoginAndPwd(String login, String pwd);
     AuthEntity findByLogin(String login);
-    AuthEntity deleteByLogin(String login);
-   // AuthEntity updateProduct(ProductDto productDto);
+    AuthEntity findById(String id);
 }
 

@@ -31,8 +31,18 @@
 			<input type="text" class="form-control" name="brand" required>
 		</div>
 		<div class="form-group">
-			<label>Type</label>
-			<input type="text" class="form-control" name="typeId" required>
+			<label>Catégorie </label>
+			<select name = "typeId" required>
+				<option value="0" name="typeId">Aucune</option>
+				<%
+				if(listCat){
+					for (var i = 0; i<listCat.length; i++){
+				%>
+					<option value="<%=listCat[i].id%>" name="typeId"><%=listCat[i].name%></option>
+				<%
+				}}
+				%>
+			</select>
 		</div>
         <div class="form-group">
             <label>Prix</label>
@@ -74,7 +84,21 @@
 		<tr>
 			<td><%= listProduct[i].name %></td>
 			<td><%= listProduct[i].brand %></td>
-			<td><%= listProduct[i].typeId %></td>
+			<td>
+			<%
+				var cat ="Aucune";
+				if(listCat){
+					for (var j = 0; j<listCat.length; j++){
+						if(listCat[j].id==listProduct[i].typeId){
+							cat=listCat[j].name 
+					
+						}
+
+					}
+				}
+				%>
+			<%= cat %>
+			</td>
 			<td><%= listProduct[i].price %></td>
 			<td><%= listProduct[i].imageURL %></td>	
 			<td><a href= "/adminProduct/update/<%= listProduct[i].id %>">Modifier</a></td>
