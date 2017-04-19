@@ -3,6 +3,7 @@
 <head>
     <title>Pachimari Accueil</title>
     <% include ./partials/header %>
+	<script src="/js/filterProducts.js"></script>
 </head>
 <body>
 
@@ -15,9 +16,27 @@
             <a href="/cart" class="btn btn-primary">Voir le panier <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
         </div>
     </div>
+	</br>
+	<div class="row">
+		<div class="col-md-offset-8 col-md-1">
+			<input type="text" value='' name="name" id="name" placeholder="Nom" class="form-control modal-sm"/>
+			<input type="text" value='' name="brand" id="brand" placeholder="Marque" class="form-control modal-sm"/>
+			<select name = "typeId" id="typeId" class="form-control modal-sm" required>
+				<option value="any" name="typeId">Catégorie</option>
+				<%
+				if(listCat){
+					for (var i = 0; i<listCat.length; i++){
+				%>
+					<option value="<%=listCat[i].id%>" name="typeId"><%=listCat[i].name%></option>
+				<%
+				}}
+				%>
+			</select>
+		</div>
+	</div>
 
     <div class="row>">
-        <div class="col-md-3 text-center">
+        <div id="products" class="col-md-3 text-center">
             <% products.forEach(function(product) { %>
                 <p><%= product.name %></p>
                 <img src="<%= product.imageURL %>" style="height: 200px; width: 200px;">
