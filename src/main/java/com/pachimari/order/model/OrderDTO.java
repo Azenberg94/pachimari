@@ -7,8 +7,8 @@ import lombok.*;
 import javax.persistence.GeneratedValue;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -23,15 +23,15 @@ public class OrderDTO {
     @NotNull
     @Min(0)
     @GeneratedValue(strategy = IDENTITY)
-    private long orderId;
+    private long id;
 
     @NotNull
     private User user;
 
     @NotNull
-    private Set<ItemEntity> items = new HashSet<>(0);
+    private List<ItemEntity> items = new ArrayList<>(0);
 
     @NotNull
     @Min(0)
-    private Float amount;
+    private float amount;
 }

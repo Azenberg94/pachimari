@@ -1,12 +1,10 @@
 package com.pachimari.order.model;
 
-import com.pachimari.user.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
 @Repository
-public interface OrderRepository extends MongoRepository<OrderEntity, String> {
-    List<OrderEntity> findByUser(User user);
+public interface OrderRepository extends OrderOperations, MongoRepository<OrderEntity, String> {
+    OrderEntity findById(long id);
 }

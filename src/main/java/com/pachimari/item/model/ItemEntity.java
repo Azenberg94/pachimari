@@ -7,8 +7,8 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,5 +28,5 @@ public class ItemEntity {
     private Float itemPrice;
 
     @DBRef
-    private Set<OrderEntity> orders = new HashSet<>();
+    private List<OrderEntity> orders = new ArrayList<>();
 }

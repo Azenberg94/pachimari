@@ -7,8 +7,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.GeneratedValue;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -34,5 +34,5 @@ public class ItemDTO {
     private Float itemPrice;
 
     @NotNull
-    private Set<OrderEntity> orders = new HashSet<>();
+    private List<OrderEntity> orders = new ArrayList<>();
 }

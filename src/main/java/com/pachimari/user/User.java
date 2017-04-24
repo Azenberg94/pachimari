@@ -8,8 +8,8 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -42,6 +42,6 @@ public class User {
     private String type;
 
     @DBRef
-    private Set<OrderEntity> orders = new HashSet<>(0);
+    private List<OrderEntity> orders = new ArrayList<>(0);
 }
 

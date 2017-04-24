@@ -16,6 +16,7 @@ public  class UserAdapter {
                 .email(userDTO.getEmail())
                 .name(userDTO.getName())
                 .type(userDTO.getType())
+                .orders(userDTO.getOrders())
                 .build();
     }
 
@@ -26,13 +27,17 @@ public  class UserAdapter {
                 .email(userEntity.getEmail())
                 .name(userEntity.getName())
                 .type(userEntity.getType())
+                .orders(userEntity.getOrders())
                 .build();
     }
+
     public static List<UserDTO> listToUserDTO(List<User> list){
        List<UserDTO> userDTOList = new ArrayList<>();
-     for(User userEntity : list){
+
+       for(User userEntity : list){
          userDTOList.add(toUserDTO(userEntity));
-     }
-     return  userDTOList;
+       }
+
+       return  userDTOList;
     }
 }

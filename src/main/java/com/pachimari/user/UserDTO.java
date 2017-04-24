@@ -7,8 +7,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.GeneratedValue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -46,5 +46,5 @@ public class UserDTO {
     private String type;
 
     @NotNull
-    private Set<OrderEntity> orders = new HashSet<>(0);
+    private List<OrderEntity> orders = new ArrayList<>(0);
 }

@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -25,14 +25,14 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private long orderId;
+    private long id;
 
     @DBRef
     @Indexed
     private User user;
 
     @DBRef
-    private Set<ItemEntity> items = new HashSet<>(0);
+    private List<ItemEntity> items = new ArrayList<>(0);
 
-    private Float amount;
+    private float amount;
 }
