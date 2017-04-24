@@ -15,6 +15,7 @@ module.exports = function(app, models){
         },
         filename: function (req, file, callback) {
         	var extention=file.originalname.split(".");
+			idImage=gid.create();
             callback(null, file.fieldname + '-' + idImage+'.'+extention[extention.length-1]);
         }
     });
@@ -77,7 +78,6 @@ module.exports = function(app, models){
 				res.redirect('/adminProduct');
 			}else{
 				rp("http://"+api.host+"/product/find/"+req.body.name+"/"+req.body.brand+"/"+req.body.typeId).then(function(body){
-					console.log(JSON.parse(body).length)
 					if(JSON.parse(body).length>0){
 						msgError="Ce nom de produit est déjà utilisé pour cette marque et ce type! ";
 					}
