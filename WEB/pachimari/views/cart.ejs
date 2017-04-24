@@ -16,7 +16,10 @@
                 <% session.products.forEach(function(product) { %>
                     <p><%= product.name %></p>
                     <img src="<%= product.imageURL %>" style="height: 200px; width: 200px;">
-                    <form action="" id="addToCartForm">
+                    <h1 style="color:#ff9933"><%= product.price %>€</h1>
+					Qty: <%= product.quantity%>
+					Prix total: <%= product.quantity*product.price %>
+					<form action="" id="addToCartForm">
                         <input type="hidden" name="id" value="<%= product.id %>">
                         <input type="hidden" name="name" value="<%= product.name %>">
                         <input type="hidden" name="brand" value="<%= product.brand %>">
