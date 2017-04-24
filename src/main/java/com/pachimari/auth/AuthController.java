@@ -30,12 +30,12 @@ public class AuthController {
         if(bindingResult.hasErrors()){
             throw new InvalideException();
         }
-
-        AuthDto authDto = authService.getAuthByLogin(login);
-        if(authDto!=null){
+        try{
+            AuthDto authDto = authService.getAuthByLogin(login);
             return authDto;
+        }catch(Exception e) {
+            return null;
         }
-        return null;
     }
 
     @PostMapping("/add")
@@ -45,26 +45,42 @@ public class AuthController {
         if(bindingResult.hasErrors()){
             throw new InvalidException();
         }
-        authService.createAuth(authDto);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{auth_id}")
-                .buildAndExpand(authDto).toUri();
-        return ResponseEntity.created(location).body(authDto);
+        try {
+            authService.createAuth(authDto);
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{auth_id}")
+                    .buildAndExpand(authDto).toUri();
+            return ResponseEntity.created(location).body(authDto);
+        }catch(Exception e ){
+            return null;
+        }
 
     }
     @GetMapping("/{auth_id}")
     public AuthDto getAuthById(@PathVariable("auth_id") String id){
-        return authService.getAuthById(id);
+        try {
+            return authService.getAuthById(id);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @PutMapping()
     public ResponseEntity updateProduct(@RequestBody @Valid AuthDto authDto, BindingResult bindingResult){
-        authService.updateAuth(authDto);
-        return new ResponseEntity(authDto, HttpStatus.OK);
+        try {
+            authService.updateAuth(authDto);
+            return new ResponseEntity(authDto, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
+        }
     }
 
     @DeleteMapping()
     public ResponseEntity deleteProduct(@RequestBody String login, BindingResult bindingResult){
-        return new ResponseEntity(authService.deleteAuth(login),HttpStatus.OK);
+        try {
+            return new ResponseEntity(authService.deleteAuth(login), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
+        }
     }
 
 }

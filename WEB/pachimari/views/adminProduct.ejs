@@ -100,7 +100,8 @@
 			<%= cat %>
 			</td>
 			<td><%= listProduct[i].price %></td>
-			<td>     <img src="<%= listProduct[i].imageURL %>" width="50%" height="50%"></td>
+			<td>     <img src="/<%= listProduct[i].imageURL %>" width="50%" height="50%"></td>
+
 			<td><a href= "/adminProduct/update/<%= listProduct[i].id %>">Modifier</a></td>
 			<td><a href= "/adminProduct/delete/<%= listProduct[i].id %>">Supprimer</a></td>
 		</tr>
