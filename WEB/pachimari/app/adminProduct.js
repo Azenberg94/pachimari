@@ -9,6 +9,7 @@ module.exports = function(app, models){
 	var request = require('request');
 	var api = models.myApi;
     var multer = require("multer");
+	var myFile = "";
     var storage = multer.diskStorage({
         destination: function (req, file, callback) {
             callback(null, './app/image/');
@@ -137,7 +138,7 @@ module.exports = function(app, models){
 	app.post('/adminProduct/update',multer({storage: storage}).single('imageURL'), function (req, res, next) {
 		msgError="";
 		msgValidation="";
-	
+		myFile="";
 		if(!req.session.type || (req.session.type && req.session.type!="admin")){
 			res.redirect("/");
 		}else{
@@ -159,13 +160,23 @@ module.exports = function(app, models){
 				}else{
 					rp("http://"+api.host+"/product/find/"+req.body.name+"/"+req.body.brand+"/"+req.body.typeId).then(function(body){
 						
-						if(JSON.parse(body).length>0 && (req.body.name != req.body.nameOld || req.body.brand != req.body.brandOld || req.body.type == req.body.typeOld)){
+						if(JSON.parse(body).length>0 && (req.body.name != req.body.nameOld || req.body.brand != req.body.brandOld || req.body.type != req.body.typeOld)){
 							msgError="Ce nom de produit est déjà utilisé pour cette marque et ce type! ";
 						}
+						
+						
 					}).catch(function (err) {
 						//console.log("Error rp1 : " + err)
 					}).then(function(){
+						if(req.file){
+							myFile = req.file.filename;
+							console.log("req.file.filename : " + req.file.filename)
+						}else{
+							myFile = req.body.imageURLOld;
+							console.log("req.body.imageURLOld : " + req.body.imageURLOld)
+						}
 						if(msgError==""){
+							
 							rp({
 								url: "http://"+api.host+"/product/" ,
 								method: "PUT",
@@ -178,7 +189,7 @@ module.exports = function(app, models){
 								  "brand": req.body.brand,
 								  "typeId": req.body.typeId,
 								  "price": req.body.price,
-								  "imageURL": req.file.filename
+								  "imageURL": myFile
 								}	
 							}).then(function(body){
 								//console.log("Body 2 : " + body)
