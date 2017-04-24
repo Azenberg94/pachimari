@@ -8,7 +8,7 @@ $(document).ready(function() {
            type : 'POST',
            data: $(this).parent().serialize(),
            dataType : 'json',
-           success : function(response, status) {;
+           success : function(response, status) {
                alert(response.success);
            }
        });
