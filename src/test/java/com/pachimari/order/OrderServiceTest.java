@@ -4,6 +4,7 @@ import com.jayway.restassured.RestAssured;
 import com.pachimari.MongoConfigTest;
 import com.pachimari.PachimariApplication;
 import com.pachimari.item.model.ItemEntity;
+import com.pachimari.order.model.OrderDTO;
 import com.pachimari.order.model.OrderEntity;
 import com.pachimari.order.service.OrderService;
 import org.junit.Before;
@@ -22,9 +23,9 @@ import java.util.List;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT, classes = {PachimariApplication.class,MongoConfigTest.class})
+@SpringBootTest(webEnvironment = RANDOM_PORT, classes = {PachimariApplication.class, MongoConfigTest.class})
 public class OrderServiceTest {
-    OrderEntity orderEntity;
+    OrderDTO orderDTO;
 
     @LocalServerPort
     private int localServerPort;
@@ -53,7 +54,7 @@ public class OrderServiceTest {
         itemEntityList.add(item1);
         itemEntityList.add(item2);
 
-        orderEntity = OrderEntity.builder()
+        orderDTO = OrderDTO.builder()
                         .id(1)
                         .items(itemEntityList)
                         .build();
@@ -61,8 +62,8 @@ public class OrderServiceTest {
 
     @Test
     public void should_calculate_the_right_amount(){
-        orderServiceImpl.calculateAmountOrder(orderEntity);
+        orderServiceImpl.calculateAmountOrder(orderDTO);
 
-        assertThat(orderEntity.getAmount()).isEqualTo(10);
+        assertThat(orderDTO.getAmount()).isEqualTo(10);
     }
 }

@@ -37,9 +37,6 @@ public class OrderRepositoryTest {
     public void init(){
         RestAssured.port = localServerPort;
 
-        mongoTemplate.dropCollection(OrderEntity.class);
-        mongoTemplate.dropCollection(User.class);
-
         User user1 = User.builder().id("1").email("test@test.fr").name("test").login("test1").build();
         User user2 = User.builder().id("2").email("test2@test.fr").name("test2").login("test3").build();
         mongoTemplate.save(user1);

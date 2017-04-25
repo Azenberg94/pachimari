@@ -1,6 +1,8 @@
 package com.pachimari.order.service;
 
 import com.pachimari.item.model.ItemEntity;
+import com.pachimari.order.model.OrderAdapter;
+import com.pachimari.order.model.OrderDTO;
 import com.pachimari.order.model.OrderEntity;
 import com.pachimari.order.model.OrderRepository;
 import com.pachimari.user.UserAdapter;
@@ -24,36 +26,36 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderEntity addOrder(OrderEntity order) {
-        orderRepository.save(order);
+    public OrderDTO addOrder(OrderDTO order) {
+        orderRepository.save(OrderAdapter.toOrderEntity(order));
 
         return order;
     }
 
     @Override
-    public List<OrderEntity> getOrders() {
-        return orderRepository.findAll();
+    public List<OrderDTO> getOrders() {
+        return OrderAdapter.listToOrderDTO(orderRepository.findAll());
     }
 
     @Override
-    public List<OrderEntity> getUserOrders(UserDTO userDTO) {
-        return orderRepository.findByUser(UserAdapter.toUserEntity(userDTO).getId());
+    public List<OrderDTO> getUserOrders(UserDTO userDTO) {
+        return OrderAdapter.listToOrderDTO(orderRepository.findByUser(UserAdapter.toUserEntity(userDTO).getId()));
     }
 
     @Override
-    public OrderEntity getIdOrder(Integer id) {
-        return orderRepository.findById(id);
+    public OrderDTO getIdOrder(Integer id) {
+        return OrderAdapter.toOrderDTO(orderRepository.findById(id));
     }
 
     @Override
-    public void calculateAmountOrder(OrderEntity orderEntity) {
+    public void calculateAmountOrder(OrderDTO orderDTO) {
         float amount = 0;
 
-        for(ItemEntity item : orderEntity.getItems()){
+        for(ItemEntity item : orderDTO.getItems()){
             amount += item.getItemPrice();
         }
 
-        orderEntity.setAmount(amount);
-        mongoTemplate.save(orderEntity);
+        orderDTO.setAmount(amount);
+        mongoTemplate.save(OrderAdapter.toOrderEntity(orderDTO));
     }
 }

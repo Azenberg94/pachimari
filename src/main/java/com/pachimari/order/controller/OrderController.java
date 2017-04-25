@@ -1,6 +1,7 @@
 package com.pachimari.order.controller;
 
 import com.pachimari.order.exception.InvalidException;
+import com.pachimari.order.model.OrderDTO;
 import com.pachimari.order.model.OrderEntity;
 import com.pachimari.order.service.OrderServiceImpl;
 import com.pachimari.user.User;
@@ -26,41 +27,29 @@ public class OrderController {
     private UserServiceImpl userService;
 
     @GetMapping()
-    public List<OrderEntity> getOrdersList() {
+    public List<OrderDTO> getOrdersList() {
         return orderService.getOrders();
     }
 
     @GetMapping("/users/{login}")
-    public List<OrderEntity> getOrdersListByLogin(@PathVariable("login") String login){
-        UserDTO userDTO = null;
-
-        try{
-            userDTO = userService.getUserByLogin(login);
-        }catch(NullPointerException ex){
-            List<OrderEntity> orderEntities = new ArrayList<>();
-            OrderEntity orderEntity = OrderEntity.builder().id(10).amount(100).user(User.builder().id("1").login("Az").name("Azedine").build()).build();
-            orderEntities.add(orderEntity);
-            return orderEntities;
-        }
+    public List<OrderDTO> getOrdersListByLogin(@PathVariable("login") String login){
+        UserDTO userDTO = userService.getUserByLogin(login);
 
         return orderService.getUserOrders(userDTO);
     }
 
     @GetMapping("/id/{id}")
-    public OrderEntity getOrdersListById(@PathVariable("id") Integer id){
-        if(orderService.getIdOrder(id) == null)
-            return OrderEntity.builder().id(5).amount(100).build();
-
+    public OrderDTO getOrdersListById(@PathVariable("id") Integer id){
         return orderService.getIdOrder(id);
     }
 
     @PostMapping()
     @ResponseStatus(CREATED)
-    public OrderEntity createOrder(@RequestBody @Valid OrderEntity orderEntity, BindingResult bindingResult){
+    public OrderDTO createOrder(@RequestBody @Valid OrderDTO orderDTO, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new InvalidException();
         }
 
-        return  orderService.addOrder(orderEntity);
+        return orderService.addOrder(orderDTO);
     }
 }
