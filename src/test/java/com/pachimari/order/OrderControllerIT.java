@@ -22,6 +22,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.RestAssured.when;
 import static com.jayway.restassured.http.ContentType.JSON;
@@ -110,11 +112,18 @@ public class OrderControllerIT {
     }
 
     @Test
-    @DirtiesContext
     public void should_create_order(){
+        User user = User.builder()
+                        .id("3")
+                        .name("Andre")
+                        .login("andre92")
+                        .build();
+
         OrderDTO orderDTO = OrderDTO.builder()
                                 .id(4)
                                 .amount(70)
+                                .user(user)
+                                .items(new ArrayList<>())
                                 .build();
 
 
