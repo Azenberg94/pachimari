@@ -25,7 +25,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private long id;
+    private Integer id;
 
     @DBRef
     @Indexed

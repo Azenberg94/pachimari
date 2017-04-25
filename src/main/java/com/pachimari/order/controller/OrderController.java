@@ -47,7 +47,7 @@ public class OrderController {
     }
 
     @GetMapping("/id/{id}")
-    public OrderEntity getOrdersListById(@PathVariable("id") long id){
+    public OrderEntity getOrdersListById(@PathVariable("id") Integer id){
         if(orderService.getIdOrder(id) == null)
             return OrderEntity.builder().id(5).amount(100).build();
 

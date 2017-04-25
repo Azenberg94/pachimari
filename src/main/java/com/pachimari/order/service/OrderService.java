@@ -9,6 +9,6 @@ public interface OrderService {
     OrderEntity addOrder(OrderEntity order);
     List<OrderEntity> getOrders();
     List<OrderEntity> getUserOrders(UserDTO userDTO);
-    OrderEntity getIdOrder(long id);
+    OrderEntity getIdOrder(Integer id);
     void calculateAmountOrder(OrderEntity orderEntity);
 }

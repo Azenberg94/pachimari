@@ -1,5 +1,6 @@
 package com.pachimari.order;
 
+import com.jayway.restassured.RestAssured;
 import com.pachimari.MongoConfigTest;
 import com.pachimari.PachimariApplication;
 import com.pachimari.item.model.ItemEntity;
@@ -9,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -24,11 +26,16 @@ import java.util.List;
 public class OrderServiceTest {
     OrderEntity orderEntity;
 
+    @LocalServerPort
+    private int localServerPort;
+
     @Autowired
     OrderService orderServiceImpl;
 
     @Before
     public void init(){
+        RestAssured.port = localServerPort;
+
         List<ItemEntity> itemEntityList = new ArrayList<>();
 
         ItemEntity item1 = ItemEntity.builder()

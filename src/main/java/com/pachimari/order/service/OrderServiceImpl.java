@@ -3,11 +3,10 @@ package com.pachimari.order.service;
 import com.pachimari.item.model.ItemEntity;
 import com.pachimari.order.model.OrderEntity;
 import com.pachimari.order.model.OrderRepository;
-import com.pachimari.order.model.OrderRepositoryImpl;
-import com.pachimari.user.User;
 import com.pachimari.user.UserAdapter;
 import com.pachimari.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,13 +14,13 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    private final MongoTemplate mongoTemplate;
     private final OrderRepository orderRepository;
-    private final OrderRepositoryImpl orderRepositoryImpl;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, OrderRepositoryImpl orderRepositoryImpl){
+    public OrderServiceImpl(OrderRepository orderRepository, MongoTemplate mongoTemplate){
         this.orderRepository = orderRepository;
-        this.orderRepositoryImpl = orderRepositoryImpl;
+        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
@@ -38,11 +37,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderEntity> getUserOrders(UserDTO userDTO) {
-        return orderRepositoryImpl.findByUser(UserAdapter.toUserEntity(userDTO));
+        return orderRepository.findByUser(UserAdapter.toUserEntity(userDTO).getId());
     }
 
     @Override
-    public OrderEntity getIdOrder(long id) {
+    public OrderEntity getIdOrder(Integer id) {
         return orderRepository.findById(id);
     }
 
@@ -55,5 +54,6 @@ public class OrderServiceImpl implements OrderService {
         }
 
         orderEntity.setAmount(amount);
+        mongoTemplate.save(orderEntity);
     }
 }

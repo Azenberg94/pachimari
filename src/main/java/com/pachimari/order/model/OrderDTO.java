@@ -23,7 +23,7 @@ public class OrderDTO {
     @NotNull
     @Min(0)
     @GeneratedValue(strategy = IDENTITY)
-    private long id;
+    private Integer id;
 
     @NotNull
     private User user;
