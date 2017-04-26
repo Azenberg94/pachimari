@@ -1,16 +1,10 @@
 package com.pachimari.product;
 
-import com.pachimari.order.model.OrderEntity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -39,11 +33,4 @@ public class ProductEntity {
     private double price;
 
     private String imageURL;
-
-    /*@Override
-    public String toString() {
-        return String.format(
-                "Product[id=%s, name='%s', brand='%s', typeId='%s', price='%f%n', imageURL='%s']",
-                id, name, brand, typeId, price, imageURL);
-    }*/
 }
