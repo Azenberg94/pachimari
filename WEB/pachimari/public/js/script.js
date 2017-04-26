@@ -21,7 +21,8 @@ $(document).ready(function() {
            url : '/order',
            type : 'POST',
            success : function(response, status) {
-               alert(response);
+               console.log("success");
+               window.location.replace("http://localhost:8080/orders");
            }
        });
 
