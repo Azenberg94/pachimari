@@ -61,23 +61,6 @@
 
 			}
 		});
-		/*request('http://localhost:6000', function (error, response, body) {
-		  if (!error && response.statusCode == 200) {
-			console.log(body) // Print the body of response.
-		  }
-		})
-		$.ajax({
-            url : url,
-		    beforeSend: function(request) {
-				request.setRequestHeader("Access-Control-Allow-Origin", "pachimari");
-		    },
-            type : 'GET',
-            dataType : 'json',
-            success : function(response, status) {;
-               alert(response.success);
-            }
-       });*/
-
 
     });
 

@@ -13,15 +13,12 @@ module.exports = function(app, models){
 	app.use(bodyParser.json());
 	
 	app.post('/product/filter', function(req, res) {
-		console.log(req.body)
 		name = req.body.name;
 		brand = req.body.brand;
 		typeId = req.body.typeId;
 		url = "http://"+api.host+"/product/find/"+name+"/"+brand+"/"+typeId;
-		console.log(url);
 		rp(url).then(function(body){
 			listProducts = JSON.parse(body);
-			console.log(listProducts);
 		}).then(setTimeout(function(){
 			res.end('{"listProducts" : '+JSON.stringify(listProducts)+', "status" : 200}');
 		},500));

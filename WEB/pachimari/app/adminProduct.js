@@ -38,7 +38,6 @@ module.exports = function(app, models){
 			})},500)
 			);
 		}
-			
 	});
 	
 	app.get('/adminProduct/valide', function(req, res, next) {
