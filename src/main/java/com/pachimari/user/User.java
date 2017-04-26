@@ -1,12 +1,18 @@
 package com.pachimari.user;
 
+import com.pachimari.order.model.OrderEntity;
 import lombok.*;
-
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Id;
+import static javax.persistence.GenerationType.IDENTITY;
 
 
 /**
@@ -18,11 +24,13 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Document(collection="user")
+@EqualsAndHashCode(exclude = {"orders"})
+@ToString(exclude = "orders")
+@Document(collection = "user")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     private String id;
 
     private String name;
@@ -31,6 +39,7 @@ public class User {
 
     private String email;
 
+    @Indexed
     private String login;
 
     private String addresse;
@@ -41,4 +50,7 @@ public class User {
 
     private String type;
 
+    @DBRef
+    private List<OrderEntity> orders = new ArrayList<>(0);
 }
+

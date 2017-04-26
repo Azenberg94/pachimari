@@ -20,6 +20,7 @@ public  class UserAdapter {
                 .addresse(userDTO.getAddresse())
                 .cp(userDTO.getCp())
                 .ville(userDTO.getVille())
+                .orders(userDTO.getOrders())
                 .build();
     }
 
@@ -34,13 +35,17 @@ public  class UserAdapter {
                 .addresse(userEntity.getAddresse())
                 .cp(userEntity.getCp())
                 .ville(userEntity.getVille())
+                .orders(userEntity.getOrders())
                 .build();
     }
+
     public static List<UserDTO> listToUserDTO(List<User> list){
-       List<UserDTO> userDTOList = new ArrayList<UserDTO>();
-     for(User userEntity : list){
+       List<UserDTO> userDTOList = new ArrayList<>();
+
+       for(User userEntity : list){
          userDTOList.add(toUserDTO(userEntity));
-     }
-     return  userDTOList;
+       }
+
+       return  userDTOList;
     }
 }
