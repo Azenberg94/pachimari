@@ -30,7 +30,7 @@
 				response.listProducts.forEach(function(product) {
 				productsHtml += `<p>`+product.name+`</p><img src=`+product.imageURL+` style="height: 200px; width: 200px;">
 				<h1 style="color:#ff9933">`+product.price+`€</h1>
-                <form action="" id="addToCartForm">
+                <form action="">
                     <input type="hidden" name="id" value=`+product.id+`>
                     <input type="hidden" name="name" value=`+product.name+`>
                     <input type="hidden" name="brand" value=`+product.brand+`>
@@ -38,10 +38,27 @@
                     <input type="hidden" name="price" value=`+product.price+`>
                     <input type="hidden" name="imageURL" value=`+product.imageURL+`>
 					Qty:<input type="number" name="quantity" min=1 max=99 value=1>
-                    <button id="addToCart" type="submit" class="btn btn-warning">Ajouter au panier</button>
+                    <button type="submit" class="btn btn-warning addToCart">Ajouter au panier</button>
                 </form></br>`;
 				});
 				$('#products').html(productsHtml);
+
+                $(".addToCart").on("click", function(e) {
+
+                    e.preventDefault();
+
+                    $.ajax({
+                        url : '/cart/add',
+                        type : 'POST',
+                        data: $(this).parent().serialize(),
+                        dataType : 'json',
+                        success : function(response, status) {
+                            alert(response.success);
+                        }
+                    });
+
+                });
+
 			}
 		});
 		/*request('http://localhost:6000', function (error, response, body) {
@@ -60,5 +77,8 @@
                alert(response.success);
             }
        });*/
-    })
+
+
+    });
+
 });

@@ -1,6 +1,6 @@
 package com.pachimari.order.model;
 
-import com.pachimari.item.model.ItemEntity;
+
 import com.pachimari.product.ProductEntity;
 import com.pachimari.user.User;
 import lombok.*;
