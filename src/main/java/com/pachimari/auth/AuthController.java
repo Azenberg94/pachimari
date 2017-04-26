@@ -1,6 +1,5 @@
 package com.pachimari.auth;
 
-import com.pachimari.exception.InvalideException;
 import com.pachimari.product.InvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,7 @@ public class AuthController {
     @PostMapping
     public AuthDto authentification(@RequestBody String login, BindingResult bindingResult ){
         if(bindingResult.hasErrors()){
-            throw new InvalideException();
+            throw new InvalidException();
         }
         try{
             AuthDto authDto = authService.getAuthByLogin(login);

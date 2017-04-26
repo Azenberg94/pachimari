@@ -11,7 +11,6 @@ import com.mongodb.MongoClient;
 @Configuration
 public class MongoConfig extends  AbstractMongoConfiguration {
 
-
     @Override
     public String getDatabaseName() {
         return "pachimari";
