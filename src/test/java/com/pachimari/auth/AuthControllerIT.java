@@ -23,7 +23,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT,classes = {PachimariApplication.class,MongoConfigTest.class})
-public class AuthControllerIt {
+public class AuthControllerIT {
     @LocalServerPort
     private int localServerPort;
     @Autowired
