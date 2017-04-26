@@ -26,6 +26,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO addOrder(OrderDTO order) {
+        calculateAmountOrder(order);
         orderRepository.save(OrderAdapter.toOrderEntity(order));
 
         return order;
@@ -55,6 +56,5 @@ public class OrderServiceImpl implements OrderService {
         }
 
         orderDTO.setAmount(amount);
-        mongoTemplate.save(OrderAdapter.toOrderEntity(orderDTO));
     }
 }

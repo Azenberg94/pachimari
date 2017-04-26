@@ -20,9 +20,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter
 @Setter
 public class OrderDTO {
-    /*@NotNull
-    @Min(0)
-    @GeneratedValue(strategy = IDENTITY)*/
     private String id;
 
     @NotNull
@@ -31,7 +28,5 @@ public class OrderDTO {
     @NotNull
     private List<ProductEntity> items = new ArrayList<>(0);
 
-    @NotNull
-    @Min(0)
     private double amount;
 }
