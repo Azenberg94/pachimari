@@ -14,7 +14,7 @@ module.exports = function(app, models){
 			rp("http://"+api.host+"/categories/" ).then(function(body){
 				listCat = JSON.parse(body);
 			}).then(setTimeout(function(){rp("http://"+api.host+"/orders/" ).then(function(body){
-				res.render('adminORder.ejs', {listOrder :  JSON.parse(body), listCat : listCat, session : req.session});
+				res.render('adminOrder.ejs', {listOrder :  JSON.parse(body), listCat : listCat, session : req.session});
 			})},500)
 			);
 		}

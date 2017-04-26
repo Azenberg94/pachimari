@@ -30,7 +30,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
     private String id;
 
     private String name;
@@ -39,7 +38,6 @@ public class User {
 
     private String email;
 
-    @Indexed
     private String login;
 
     private String addresse;

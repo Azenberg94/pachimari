@@ -23,9 +23,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter
 @Setter
 public class UserDTO {
-
-    @NotNull
-    @GeneratedValue(strategy = IDENTITY)
     private String id;
 
     @NotBlank
@@ -63,6 +60,5 @@ public class UserDTO {
     @NotBlank
     private String type;
 
-    @NotNull
     private List<OrderEntity> orders = new ArrayList<>(0);
 }
