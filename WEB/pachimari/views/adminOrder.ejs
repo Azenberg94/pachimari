@@ -1,0 +1,72 @@
+<!-- views/signup.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Administration Commande</title>
+	<% include ./partials/header %>
+</head>
+<body>
+<% include ./partials/navbar %>
+<div class="container">
+
+
+<div class="col-sm-6 col-sm-offset-3">
+
+	<h1><span class="fa fa-sign-in"></span> Liste des Commandes</h1>
+
+
+<div class="col-sm-8 col-sm-offset-1">
+
+	<h1><span class="fa fa-sign-in"></span>Liste des produits</h1>
+
+	<table class="table">
+		<%
+		if(listOrder){
+			for (var i = 0; i<listOrder.length; i++){
+		
+		%>
+		
+		<tr>
+			<th>Commande N° /M. / Adresse : </th>
+		</tr>
+		<tr>
+			<td><%= listOrder[i].name %></td>
+			<td><%= listOrder[i].brand %></td>
+			<td>
+			<%
+				var cat ="Aucune";
+				if(listCat){
+					for (var j = 0; j<listCat.length; j++){
+						if(listCat[j].id==listOrder[i].typeId){
+							cat=listCat[j].name 
+					
+						}
+
+					}
+				}
+				%>
+			<%= cat %>
+			</td>
+			<td><%= listOrder[i].price %></td>
+			<td>     <img src="/<%= listOrder[i].imageURL %>" width="50%" height="50%"></td>
+
+			
+		</tr>
+		<tr>
+			<td></td>
+			<td> total : </td>
+		</tr>
+		<%
+		}}
+		%>
+	</table>
+
+	
+	
+</div>
+
+
+</div><br><br>
+	<% include ./partials/footer %>
+</body>
+</html>
