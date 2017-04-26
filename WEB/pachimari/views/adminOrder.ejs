@@ -10,14 +10,13 @@
 <div class="container">
 
 
-<div class="col-sm-6 col-sm-offset-3">
 
-	<h1><span class="fa fa-sign-in"></span> Liste des Commandes</h1>
+<h1><span class="fa fa-sign-in"></span> Liste des Commandes</h1>
 
 
-<div class="col-sm-8 col-sm-offset-1">
+<div class="col-sm-9 col-sm-offset-1">
 
-	<h1><span class="fa fa-sign-in"></span>Liste des produits</h1>
+	<h1><span class="fa fa-sign-in"></span>Liste des Commandes</h1>
 
 	<table class="table">
 		<%
@@ -27,18 +26,29 @@
 		%>
 		
 		<tr>
-			<th>Commande N° /M. / Adresse : </th>
+			<th colspan="4">Commande N° <%=listOrder[i].user.id%> / M. <%=listOrder[i].user.name%> <%=listOrder[i].user.lastName%> / Adresse : <%=listOrder[i].user.addresse%> <%=listOrder[i].user.cp%> <%=listOrder[i].user.ville%></th>
 		</tr>
 		<tr>
-			<td><%= listOrder[i].name %></td>
-			<td><%= listOrder[i].brand %></td>
+			<th>Nom</th>
+			<th>Marque</th>
+			<th>Type</th>
+			<th>Prix</th>
+		<tr>
+		<% 
+			var total = 0; 
+			for(var j = 0; j<listOrder[i].items.length; j++){
+			total = total + listOrder[i].items[j].price;
+		%>
+		<tr>
+			<td><%= listOrder[i].items[j].name %></td>
+			<td><%= listOrder[i].items[j].brand %></td>
 			<td>
 			<%
 				var cat ="Aucune";
 				if(listCat){
-					for (var j = 0; j<listCat.length; j++){
-						if(listCat[j].id==listOrder[i].typeId){
-							cat=listCat[j].name 
+					for (var x = 0; x<listCat.length; x++){
+						if(listCat[x].id==listOrder[i].items[j].typeId){
+							cat=listCat[x].name 
 					
 						}
 
@@ -47,14 +57,17 @@
 				%>
 			<%= cat %>
 			</td>
-			<td><%= listOrder[i].price %></td>
-			<td>     <img src="/<%= listOrder[i].imageURL %>" width="50%" height="50%"></td>
+			<td><%= listOrder[i].items[j].price %></td>
+			
 
 			
 		</tr>
+		<%
+			}
+		%>
 		<tr>
-			<td></td>
-			<td> total : </td>
+			<td colspan="3"></td>
+			<td > total : <%=total%></td>
 		</tr>
 		<%
 		}}
@@ -65,8 +78,7 @@
 	
 </div>
 
-
-</div><br><br>
+<br><br>
 	<% include ./partials/footer %>
 </body>
 </html>
