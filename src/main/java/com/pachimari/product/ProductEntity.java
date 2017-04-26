@@ -33,5 +33,4 @@ public class ProductEntity {
                 "Product[id=%s, name='%s', brand='%s', typeId='%s', price='%f%n', imageURL='%s']",
                 id, name, brand, typeId, price, imageURL);
     }
-
 }

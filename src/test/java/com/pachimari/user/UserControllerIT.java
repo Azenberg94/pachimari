@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
@@ -64,14 +66,23 @@ public class UserControllerIT {
     @Test
     public void should_create_user(){
 
-        UserDTO userDTO=UserDTO.builder().id("2").name("fifth").lastName("fifthlast").login("test").email("test@email.fr").type("admin").addresse("36 rue houdart").ville("roissy").cp("95700").build();
+        UserDTO userDTO=UserDTO.builder().id("2")
+                                         .name("fifth")
+                                         .lastName("fifthlast")
+                                         .login("test")
+                                         .email("test@email.fr")
+                                         .type("admin")
+                                         .addresse("36 rue houdart")
+                                         .ville("roissy")
+                                         .cp("95700")
+                                         .orders(new ArrayList<>())
+                                         .build();
 
         given().log().all().contentType(JSON).body(userDTO).when()
                 .post("/user")
                 .then()
                 .statusCode(201)
                 .body("name",is("fifth")).log().all();
-
     }
 
     @Test
