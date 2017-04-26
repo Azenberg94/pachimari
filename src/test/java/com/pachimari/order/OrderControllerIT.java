@@ -49,9 +49,9 @@ public class OrderControllerIT {
 
         mongoTemplate.save(user1);
         mongoTemplate.save(user2);
-        mongoTemplate.save(OrderEntity.builder().id(1).amount(100).user(user1).build());
-        mongoTemplate.save(OrderEntity.builder().id(2).amount(30).user(user1).build());
-        mongoTemplate.save(OrderEntity.builder().id(3).amount(50).user(user2).build());
+        mongoTemplate.save(OrderEntity.builder().id("1").amount(100).user(user1).build());
+        mongoTemplate.save(OrderEntity.builder().id("2").amount(30).user(user1).build());
+        mongoTemplate.save(OrderEntity.builder().id("3").amount(50).user(user2).build());
     }
 
     @After
@@ -97,7 +97,7 @@ public class OrderControllerIT {
 
     @Test
     public void should_get_one_order(){
-        Integer idToFind = 1;
+        String idToFind = "1";
         float amountToFind = 100;
         String userLoginToFind = "az";
 
@@ -120,7 +120,7 @@ public class OrderControllerIT {
                         .build();
 
         OrderDTO orderDTO = OrderDTO.builder()
-                                .id(4)
+                                .id("4")
                                 .amount(70)
                                 .user(user)
                                 .items(new ArrayList<>())
@@ -131,7 +131,7 @@ public class OrderControllerIT {
                 .post("/orders/")
                 .then()
                 .statusCode(201)
-                .body("id",is(4))
+                .body("id",is("4"))
                 .log()
                 .all();
     }

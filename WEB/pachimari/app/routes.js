@@ -11,5 +11,6 @@ module.exports = function(app, models){
 	require("./logout")(app, models);
 	require("./product")(app, models);
     require("./cart")(app, models);
+    require("./order")(app, models);
 }
 

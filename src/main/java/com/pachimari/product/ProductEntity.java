@@ -1,12 +1,9 @@
 package com.pachimari.product;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.GeneratedValue;
-
-import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by andrem on 23/03/2017.
@@ -16,12 +13,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-@Document(collection = "product")
 public class ProductEntity {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
     private String id;
 
     private String name;
@@ -33,4 +26,12 @@ public class ProductEntity {
     private double price;
 
     private String imageURL;
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Product[id=%s, name='%s', brand='%s', typeId='%s', price='%f%n', imageURL='%s']",
+                id, name, brand, typeId, price, imageURL);
+    }
+
 }

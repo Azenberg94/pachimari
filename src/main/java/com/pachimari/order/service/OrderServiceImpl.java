@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO getIdOrder(Integer id) {
+    public OrderDTO getIdOrder(String id) {
         return OrderAdapter.toOrderDTO(orderRepository.findById(id));
     }
 

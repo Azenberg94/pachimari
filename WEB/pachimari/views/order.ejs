@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Pachimari Panier</title>
+    <% include ./partials/header %>
+</head>
+<body>
+
+<% include ./partials/navbar %>
+
+<div class="container">
+
+    <div class="row>">
+
+        <% orders.forEach(function(order) { %>
+        <div class="col-md-3 text-center" style="margin-bottom:50px;">
+            <div><%= order.id %></div>
+        </div>
+        <% }) %>
+
+
+    </div>
+
+</div>
+
+<% include ./partials/footer %>
+
+</body>
+</html>

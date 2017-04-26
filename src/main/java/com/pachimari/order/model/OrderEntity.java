@@ -1,6 +1,6 @@
 package com.pachimari.order.model;
 
-import com.pachimari.item.model.ItemEntity;
+
 import com.pachimari.product.ProductEntity;
 import com.pachimari.user.User;
 import lombok.*;
@@ -26,7 +26,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Integer id;
+    private String id;
 
     @DBRef
     @Indexed

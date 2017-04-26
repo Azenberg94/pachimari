@@ -39,7 +39,7 @@ public class OrderController {
     }
 
     @GetMapping("/id/{id}")
-    public OrderDTO getOrdersListById(@PathVariable("id") Integer id){
+    public OrderDTO getOrdersListById(@PathVariable("id") String id){
         return orderService.getIdOrder(id);
     }
 

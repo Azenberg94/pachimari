@@ -42,9 +42,9 @@ public class OrderRepositoryTest {
         mongoTemplate.save(user1);
         mongoTemplate.save(user2);
 
-        OrderEntity order1 = OrderEntity.builder().id(1).user(user1).amount(50).build();
-        OrderEntity order2 = OrderEntity.builder().id(2).user(user1).amount(30).build();
-        OrderEntity order3 = OrderEntity.builder().id(3).user(user2).amount(100).build();
+        OrderEntity order1 = OrderEntity.builder().id("1").user(user1).amount(50).build();
+        OrderEntity order2 = OrderEntity.builder().id("2").user(user1).amount(30).build();
+        OrderEntity order3 = OrderEntity.builder().id("3").user(user2).amount(100).build();
         mongoTemplate.save(order1);
         mongoTemplate.save(order2);
         mongoTemplate.save(order3);
@@ -64,13 +64,13 @@ public class OrderRepositoryTest {
 
     @Test
     public void should_find_order_by_id(){
-        Integer idOrder1 = 1;
+        String idOrder1 = "1";
         float amountExpectedOrder1 = 50;
 
-        Integer idOrder2 = 2;
+        String idOrder2 = "2";
         float amountExpectedOrder2 = 30;
 
-        Integer idOrder3 = 3;
+        String idOrder3 = "3";
         float amountExpectedOrder3 = 100;
 
         OrderEntity result = orderRepository.findById(idOrder1);
