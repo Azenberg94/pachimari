@@ -1,5 +1,6 @@
 package com.pachimari;
 
+import com.mongodb.MongoClientURI;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
@@ -12,14 +13,13 @@ public class MongoConfig extends  AbstractMongoConfiguration {
 
     @Override
     public String getDatabaseName() {
-        return "pachimari";
+        return "heroku_ncgf20l8";
     }
 
     @Override
     @Bean
     public Mongo mongo() throws Exception {
-        return new MongoClient("127.0.0.1");
+        return new MongoClient(new MongoClientURI("mongodb://az:projetjee2017@ds117931.mlab.com:17931/"));
     }
-
 }
 
