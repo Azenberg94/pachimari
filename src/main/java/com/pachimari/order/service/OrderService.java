@@ -10,6 +10,6 @@ public interface OrderService {
     OrderDTO addOrder(OrderDTO order);
     List<OrderDTO> getOrders();
     List<OrderDTO> getUserOrders(UserDTO userDTO);
-    OrderDTO getIdOrder(Integer id);
+    OrderDTO getIdOrder(String id);
     void calculateAmountOrder(OrderDTO orderDTO);
 }

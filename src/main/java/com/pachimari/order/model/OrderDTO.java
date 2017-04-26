@@ -20,10 +20,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter
 @Setter
 public class OrderDTO {
-    @NotNull
+    /*@NotNull
     @Min(0)
-    @GeneratedValue(strategy = IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = IDENTITY)*/
+    private String id;
 
     @NotNull
     private User user;

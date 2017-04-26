@@ -54,7 +54,7 @@ public class OrderServiceTest {
         itemEntityList.add(item2);
 
         orderDTO = OrderDTO.builder()
-                        .id(1)
+                        .id("1")
                         .items(itemEntityList)
                         .build();
     }

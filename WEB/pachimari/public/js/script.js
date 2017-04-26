@@ -13,5 +13,17 @@ $(document).ready(function() {
            }
        });
 
-   })
+   });
+
+   $("#validateOrder").on("click", function(e) {
+
+       $.ajax({
+           url : '/order',
+           type : 'POST',
+           success : function(response, status) {
+               alert(response);
+           }
+       });
+
+   });
 });
