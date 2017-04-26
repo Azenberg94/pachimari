@@ -11,7 +11,5 @@ import java.util.List;
 public interface OrderRepository extends MongoRepository<OrderEntity, String> {
     List<OrderEntity> findAll();
     OrderEntity findById(String id);
-
-    @Query(value="{'user.$id' : ?0 }")
     List<OrderEntity> findByUser(String id);
 }
