@@ -21,7 +21,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT,classes = {PachimariApplication.class,MongoConfigTest.class})
-public class ProductRepositoryMongo {
+public class ProductRepositoryTest {
     @Autowired
     ProductRepository repository;
     @Autowired
