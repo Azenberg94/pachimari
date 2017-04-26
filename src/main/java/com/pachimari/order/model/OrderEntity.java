@@ -1,6 +1,7 @@
 package com.pachimari.order.model;
 
 import com.pachimari.item.model.ItemEntity;
+import com.pachimari.product.ProductEntity;
 import com.pachimari.user.User;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -32,7 +33,7 @@ public class OrderEntity {
     private User user;
 
     @DBRef
-    private List<ItemEntity> items = new ArrayList<>(0);
+    private List<ProductEntity> items = new ArrayList<>(0);
 
-    private float amount;
+    private double amount;
 }

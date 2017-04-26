@@ -1,10 +1,9 @@
 package com.pachimari.order.service;
 
-import com.pachimari.item.model.ItemEntity;
 import com.pachimari.order.model.OrderAdapter;
 import com.pachimari.order.model.OrderDTO;
-import com.pachimari.order.model.OrderEntity;
 import com.pachimari.order.model.OrderRepository;
+import com.pachimari.product.ProductEntity;
 import com.pachimari.user.UserAdapter;
 import com.pachimari.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +48,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void calculateAmountOrder(OrderDTO orderDTO) {
-        float amount = 0;
+        double amount = 0;
 
-        for(ItemEntity item : orderDTO.getItems()){
-            amount += item.getItemPrice();
+        for(ProductEntity item : orderDTO.getItems()){
+            amount += item.getPrice();
         }
 
         orderDTO.setAmount(amount);

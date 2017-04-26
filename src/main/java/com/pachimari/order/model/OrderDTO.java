@@ -1,6 +1,6 @@
 package com.pachimari.order.model;
 
-import com.pachimari.item.model.ItemEntity;
+import com.pachimari.product.ProductEntity;
 import com.pachimari.user.User;
 import lombok.*;
 
@@ -29,9 +29,9 @@ public class OrderDTO {
     private User user;
 
     @NotNull
-    private List<ItemEntity> items = new ArrayList<>(0);
+    private List<ProductEntity> items = new ArrayList<>(0);
 
     @NotNull
     @Min(0)
-    private float amount;
+    private double amount;
 }

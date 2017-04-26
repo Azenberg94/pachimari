@@ -3,10 +3,9 @@ package com.pachimari.order;
 import com.jayway.restassured.RestAssured;
 import com.pachimari.MongoConfigTest;
 import com.pachimari.PachimariApplication;
-import com.pachimari.item.model.ItemEntity;
 import com.pachimari.order.model.OrderDTO;
-import com.pachimari.order.model.OrderEntity;
 import com.pachimari.order.service.OrderService;
+import com.pachimari.product.ProductEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,18 +36,18 @@ public class OrderServiceTest {
     public void init(){
         RestAssured.port = localServerPort;
 
-        List<ItemEntity> itemEntityList = new ArrayList<>();
+        List<ProductEntity> itemEntityList = new ArrayList<>();
 
-        ItemEntity item1 = ItemEntity.builder()
-                            .itemId(1)
-                            .itemName("Item 1")
-                            .itemPrice((float) 5)
+        ProductEntity item1 = ProductEntity.builder()
+                            .id("1")
+                            .name("Item 1")
+                            .price((double) 5)
                             .build();
 
-        ItemEntity item2 = ItemEntity.builder()
-                .itemId(2)
-                .itemName("Item 2")
-                .itemPrice((float) 5)
+        ProductEntity item2 = ProductEntity.builder()
+                .id("2")
+                .name("Item 2")
+                .price((double) 5)
                 .build();
 
         itemEntityList.add(item1);
