@@ -11,6 +11,7 @@ module.exports = function(app, models) {
 
             var user;
             var items = [];
+            var amount = 0;
 
             rp({
                 url: "http://"+api.host+"/user/"+req.session.login,
@@ -24,7 +25,10 @@ module.exports = function(app, models) {
 
                 req.session.products.forEach(function(product) {
                     items.push(product);
+                    amount += parseInt(product.price);
                 });
+
+                console.log(amount);
 
 
                 rp({
@@ -36,12 +40,18 @@ module.exports = function(app, models) {
                     json:{
                         "user": user,
                         "items": items,
-                        "amount": 0
+                        "amount": parseInt(amount)
                     }
                 }).then(function(body) {
-                    //console.log(body);
+
+                    var response = {
+                        status  : 200,
+                        success : 'Add Successfully'
+                    }
+
+                    res.end(JSON.stringify(response));
                 }).catch(function(err) {
-                    //console.log(err);
+                    console.log(err);
                 });
 
 
@@ -84,7 +94,8 @@ module.exports = function(app, models) {
             url: "http://"+api.host+"/orders/users/"+req.session.login
         }).then(function(body) {
 
-            res.render('order.ejs', { orders: body });
+            console.log(body);
+            res.render('order.ejs', { orders: JSON.parse(body), session: req.session });
 
         }).catch(function(err) {
             console.log(err);
